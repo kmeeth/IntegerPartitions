@@ -1,3 +1,0 @@
-D:/Data/dev/IntegerPartitions/cmake-build-release/CMakeFiles/IntegerPartitions.dir
-D:/Data/dev/IntegerPartitions/cmake-build-release/CMakeFiles/edit_cache.dir
-D:/Data/dev/IntegerPartitions/cmake-build-release/CMakeFiles/rebuild_cache.dir
