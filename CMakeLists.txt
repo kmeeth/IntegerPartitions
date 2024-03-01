@@ -4,4 +4,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 project(IntegerPartitions LANGUAGES CXX)
 add_executable(IntegerPartitions main.cpp
-        IntegerPartitionsGenerator.h)
+        IntegerPartitionsGenerator.h
+        SimpleBacktrackingPartitionsGenerator.h
+        SimpleBacktrackingPartitionsGenerator.cpp)
