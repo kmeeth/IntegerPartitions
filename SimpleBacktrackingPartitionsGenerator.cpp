@@ -11,13 +11,20 @@ static std::ostream& operator<<(std::ostream& out, const Partition& partition)
     return out;
 }
 
-static PartitionList part(const int n, const int k, std::ostream* const out, const bool printPartitions)
+static PartitionList part(const int n, const int k)
 {
     return {};
 }
+
 std::chrono::duration<double>
-SimpleBacktrackingPartitionsGenerator::generateIntegerPartitions(int number, int partCount, std::ostream* out,
-    bool printPartitions) const
+SimpleBacktrackingPartitionsGenerator::generateIntegerPartitions(const int n, const int k, std::ostream* const out,
+    const bool printPartitions) const
 {
-    return {};
+    auto start = std::chrono::high_resolution_clock::now();
+    PartitionList allPartitions = part(n, k);
+    auto end = std::chrono::high_resolution_clock::now();
+    if(printPartitions and out)
+        for(auto& partition : allPartitions)
+            *out << partition << "\n";
+    return end - start;
 }
