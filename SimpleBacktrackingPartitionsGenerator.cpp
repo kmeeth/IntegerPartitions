@@ -18,7 +18,7 @@ static PartitionList part(const int n, const int k, const int min, const int max
     if(n <= 0)
         return {{}};
     PartitionList result;
-    for(int i = 1; i <= n; i++)
+    for(int i = min; i <= max + 1; i++)
     {
         auto partitions = part(n - i, k - 1, i, max);
         for(auto& p : partitions)
@@ -41,5 +41,7 @@ SimpleBacktrackingPartitionsGenerator::generateIntegerPartitions(const int n, co
     if(printPartitions and out)
         for(auto& partition : allPartitions)
             *out << partition << "\n";
+    if(out)
+        *out << "Found " << allPartitions.size() << " partitions of " << n << " into " << k << " parts.\n";
     return end - start;
 }

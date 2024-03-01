@@ -4,5 +4,5 @@
 int main()
 {
       SimpleBacktrackingPartitionsGenerator gen;
-      gen.generateIntegerPartitions(5, 2, &std::cout, true);
+      gen.generateIntegerPartitions(100, 3, &std::cout, true);
 }
