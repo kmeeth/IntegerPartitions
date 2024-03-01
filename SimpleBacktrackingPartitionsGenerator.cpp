@@ -11,14 +11,16 @@ static std::ostream& operator<<(std::ostream& out, const Partition& partition)
     return out;
 }
 
-static PartitionList part(const int n, const int k)
+static PartitionList part(const int n, const int k, const int min, const int max)
 {
-    if(n == 0)
+    if(k * min > n or k * max < n)
         return {};
+    if(n <= 0)
+        return {{}};
     PartitionList result;
     for(int i = 1; i <= n; i++)
     {
-        auto partitions = part(n - i, k - 1);
+        auto partitions = part(n - i, k - 1, i, max);
         for(auto& p : partitions)
         {
             p.push_back(i);
@@ -34,7 +36,7 @@ SimpleBacktrackingPartitionsGenerator::generateIntegerPartitions(const int n, co
     const bool printPartitions) const
 {
     auto start = std::chrono::high_resolution_clock::now();
-    PartitionList allPartitions = part(n, k);
+    PartitionList allPartitions = part(n, k, 1, n);
     auto end = std::chrono::high_resolution_clock::now();
     if(printPartitions and out)
         for(auto& partition : allPartitions)
