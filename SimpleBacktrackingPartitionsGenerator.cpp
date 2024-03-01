@@ -13,7 +13,20 @@ static std::ostream& operator<<(std::ostream& out, const Partition& partition)
 
 static PartitionList part(const int n, const int k)
 {
-    return {};
+    if(n == 0)
+        return {};
+    PartitionList result;
+    for(int i = 1; i <= n; i++)
+    {
+        auto partitions = part(n - i, k - 1);
+        for(auto& p : partitions)
+        {
+            p.push_back(i);
+            result.push_back(p);
+            p.pop_back();
+        }
+    }
+    return result;
 }
 
 std::chrono::duration<double>
