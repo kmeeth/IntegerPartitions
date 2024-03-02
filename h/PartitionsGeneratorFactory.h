@@ -1,12 +1,12 @@
 #ifndef INTEGERPARTITIONS_INTEGERPARTITIONSGENERATORFACTORY_H
 #define INTEGERPARTITIONS_INTEGERPARTITIONSGENERATORFACTORY_H
 #include <memory>
-#include "IntegerPartitionsGenerator.h"
+#include "PartitionsGenerator.h"
 
-class IntegerPartitionsGeneratorFactory
+class PartitionsGeneratorFactory
 {
 public:
-    static std::unique_ptr<IntegerPartitionsGenerator> make(std::string_view name);
+    static std::unique_ptr<PartitionsGenerator> make(std::string_view name);
 };
 
 #endif //INTEGERPARTITIONS_INTEGERPARTITIONSGENERATORFACTORY_H

@@ -1,16 +1,28 @@
 #include <iostream>
 #include <memory>
 #include <unordered_map>
-#include "IntegerPartitionsGeneratorFactory.h"
+#include "../h/PartitionsGeneratorFactory.h"
 
 namespace
 {
     const std::string algorithms[] = {"SimpleBacktracking"};
+    std::unordered_map<std::string, std::string> options;
+}
+
+static bool getOptions(int argc, char* argv[])
+{
+    return true;
 }
 
 int main(int argc, char* argv[])
 {
-    std::unique_ptr<IntegerPartitionsGenerator> generator = IntegerPartitionsGeneratorFactory::make("SimpleBacktracking");
+    if(!getOptions(argc, argv))
+    {
+        std::cerr << options["msg"] << "\n";
+        return -1;
+    }
+    
+    std::unique_ptr<PartitionsGenerator> generator = PartitionsGeneratorFactory::make(options["alg"]);
     if(!generator)
     {
         std::cerr << "Unknown algorithm.\nPossible values:\n";
@@ -21,6 +33,6 @@ int main(int argc, char* argv[])
     const int n = 10;
     const int k = 3;
 
-    auto time = generator->generateIntegerPartitions(n, k, nullptr, nullptr);
+    auto time = generator->generatePartitions(n, k, nullptr, nullptr);
     std::cout << "Time elapsed:\n\t" << time.count() << "ms\n";
 }

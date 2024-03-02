@@ -1,4 +1,4 @@
-#include "SimpleBacktrackingPartitionsGenerator.h"
+#include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
 #include <vector>
 
 using Partition = std::vector<int>;
@@ -32,7 +32,8 @@ static PartitionList part(const int n, const int k, const int min, const int max
 }
 
 std::chrono::duration<double>
-SimpleBacktrackingPartitionsGenerator::generateIntegerPartitions(const int n, const int k, std::ostream* const partitionsOut, std::ostream* const resultsOut) const
+SimpleBacktrackingIntegerPartitionsGenerator::generatePartitions(
+    int n, int k, std::ostream* partitionsOut, std::ostream* resultsOut) const
 {
     auto start = std::chrono::high_resolution_clock::now();
     PartitionList allPartitions = part(n, k, 1, n);
