@@ -86,8 +86,6 @@ int main(int argc, char* argv[])
             std::cerr << "\t" << a << "\n";
         return -1;
     }
-    const int n = 10;
-    const int k = 3;
 
     auto time = generator->generatePartitions(n, k, nullptr, nullptr);
     std::cout << "Time elapsed:\n\t" << time.count() << "ms\n";
