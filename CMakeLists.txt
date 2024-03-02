@@ -6,4 +6,6 @@ project(IntegerPartitions LANGUAGES CXX)
 add_executable(IntegerPartitions main.cpp
         IntegerPartitionsGenerator.h
         SimpleBacktrackingPartitionsGenerator.h
-        SimpleBacktrackingPartitionsGenerator.cpp)
+        SimpleBacktrackingPartitionsGenerator.cpp
+        IntegerPartitionsGeneratorFactory.h
+        IntegerPartitionsGeneratorFactory.cpp)
