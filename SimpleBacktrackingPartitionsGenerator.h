@@ -5,7 +5,7 @@
 class SimpleBacktrackingPartitionsGenerator : public IntegerPartitionsGenerator
 {
 public:
-    std::chrono::duration<double> generateIntegerPartitions(int number, int partCount, std::ostream* out, bool printPartitions) const override;
+    std::chrono::duration<double> generateIntegerPartitions(int number, int partCount, std::ostream* partitionsOut, std::ostream* resultsOut) const override;
 };
 
 
