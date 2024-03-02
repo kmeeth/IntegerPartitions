@@ -79,13 +79,12 @@ int main(int argc, char* argv[])
     }
     
     std::unique_ptr<PartitionsGenerator> generator = PartitionsGeneratorFactory::make(algorithm);
-    if(!generator)
+    if(!generator) // Should not happen.
     {
-        std::cerr << "Unknown algorithm.\nPossible values:\n";
-        for(auto& a : algorithms)
-            std::cerr << "\t" << a << "\n";
+        std::cerr << "SHOULD NOT HAPPEN: CHECK FACTORY AND MAIN.";
         return -1;
     }
+
 
     auto time = generator->generatePartitions(n, k, nullptr, nullptr);
     std::cout << "Time elapsed:\n\t" << time.count() << "ms\n";
