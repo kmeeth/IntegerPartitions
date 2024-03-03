@@ -1,13 +1,14 @@
 #include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
 #include <vector>
+#include <immer/vector.hpp>
 
 using Partition = std::vector<int>;
 using PartitionList = std::vector<Partition>;
 
 static std::ostream& operator<<(std::ostream& out, const Partition& partition)
 {
-    for(int i = 0; i < partition.size(); i++)
-        out << partition[i] << (i == partition.size() - 1 ? "" : ", ");
+    for(int i : partition)
+        out << i << ' ';
     return out;
 }
 
