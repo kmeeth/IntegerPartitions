@@ -2,8 +2,11 @@
 #include <vector>
 #include <immer/vector.hpp>
 
-using Partition = std::vector<int>;
-using PartitionList = std::vector<Partition>;
+namespace
+{
+    using Partition = std::vector<int>;
+    using PartitionList = std::vector<Partition>;
+}
 
 static std::ostream& operator<<(std::ostream& out, const Partition& partition)
 {
