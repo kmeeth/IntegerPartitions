@@ -1,8 +1,8 @@
 #include <iostream>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 #include "../h/PartitionsGeneratorFactory.h"
 
 namespace
@@ -85,7 +85,26 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    std::vector<std::pair<int, int>> inputParameters;
+    if(input.empty())
+        inputParameters.emplace_back(n,k);
+    else
+    {
+        std::ifstream file(input);
+        while(file)
+        {
+            file >> n >> k;
+            inputParameters.emplace_back(n,k);
+        }
+    }
 
-    auto time = generator->generatePartitions(n, k, nullptr, nullptr);
-    std::cout << "Time elapsed:\n\t" << time.count() << "ms\n";
+    std::unique_ptr<std::ostream> pout, rout;
+    if(partitionsOut != "std")
+        pout = std::make_unique<std::ofstream>("../" + partitionsOut);
+    if(resultsOut != "std")
+        rout = std::make_unique<std::ofstream>("../" + resultsOut);
+    std::chrono::duration<double> sumTime(0);
+    for(auto& [n, k] : inputParameters)
+        sumTime += generator->generatePartitions(n, k, partitionsOut == "std" ? &std::cout : pout.get(), resultsOut == "std" ? &std::cout : rout.get());
+    std::cout << "Time elapsed:\n\t" << sumTime.count() << "ms\n";
 }
