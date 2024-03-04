@@ -1,11 +1,8 @@
 #include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
 #include <vector>
 
-namespace
-{
-    using Partition = std::vector<int>;
-    using PartitionList = std::vector<Partition>;
-}
+using Partition = IntegerPartitionsGenerator::Partition;
+using PartitionList = IntegerPartitionsGenerator::PartitionList;
 
 static std::ostream& operator<<(std::ostream& out, const Partition& partition)
 {

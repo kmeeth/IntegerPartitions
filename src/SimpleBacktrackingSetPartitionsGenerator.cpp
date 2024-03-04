@@ -1,12 +1,9 @@
 #include "h/SimpleBacktrackingSetPartitionsGenerator.h"
 #include <vector>
 
-namespace
-{
-    using Subset = std::vector<int>;
-    using Partition = std::vector<Subset>;
-    using PartitionList = std::vector<Partition>;
-}
+using Subset = SetPartitionsGenerator::Subset;
+using Partition = SetPartitionsGenerator::Partition;
+using PartitionList = SetPartitionsGenerator::PartitionList;
 
 static std::ostream& operator<<(std::ostream& out, const Partition& partition)
 {

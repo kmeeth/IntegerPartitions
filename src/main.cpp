@@ -3,20 +3,20 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include "../h/PartitionsGeneratorFactory.h"
+#include <chrono>
+#include "h/IntegerPartitionsGeneratorFactory.h"
+#include "h/SetPartitionsGeneratorFactory.h"
 
 namespace
 {
-    const std::vector<std::string> algorithms = {"SimpleBacktrackingInteger", "SimpleBacktrackingSet"};
-    const std::vector<std::string> visitors = {"Counter"};
     const std::vector<std::string> modes = {"int", "set"};
-    std::string algorithm, visitor = "Counter", mode, input, message, partitionsOut, resultsOut;
+    std::string algorithm = "SimpleBacktracking", visitor = "Counter", mode, input, message, partitionsOut, resultsOut;
     bool cache = false;
     int n = -1, k = -1;
 }
 
 /*
- * -alg <algorithm-name> : Name of the algorithm used (mandatory)
+ * -alg <algorithm-name> : Name of the algorithm used (default: SimpleBacktracking)
  * -visit <visitor-name> : Name of the visitor used (default : Counter)
  * -mode <int | set> : Whether set or int partitions are generated (mandatory)
  * -file <filename> : Name of the file used as input
@@ -63,25 +63,11 @@ static bool getOptions(int argc, char* argv[])
         std::cerr << "-alg and -mode must be specified.";
         return false;
     }
-    if(std::find(algorithms.begin(), algorithms.end(), algorithm) == algorithms.end())
-    {
-        message = "Unknown algorithm.\nPossible values:\n";
-        for(auto& a : algorithms)
-            message += "\t" + a + "\n";
-        return false;
-    }
     if(std::find(modes.begin(), modes.end(), mode) == modes.end())
     {
         message = "Unknown mode.\nPossible values:\n";
         for(auto& m : modes)
             message += "\t" + m + "\n";
-        return false;
-    }
-    if(std::find(visitors.begin(), visitors.end(), visitor) == visitors.end())
-    {
-        message = "Unknown visitor.\nPossible values:\n";
-        for(auto& v : visitors)
-            message += "\t" + v + "\n";
         return false;
     }
     if(input.empty() and (n == -1 or k == -1))
@@ -99,13 +85,6 @@ int main(int argc, char* argv[])
         std::cerr << message << "\n";
         return -1;
     }
-    
-    std::unique_ptr<PartitionsGenerator> generator = PartitionsGeneratorFactory::make(algorithm);
-    if(!generator) // Should not happen.
-    {
-        std::cerr << "SHOULD NOT HAPPEN: CHECK FACTORY AND MAIN.";
-        return -1;
-    }
 
     std::vector<std::pair<int, int>> inputParameters;
     if(input.empty())
@@ -121,12 +100,38 @@ int main(int argc, char* argv[])
     }
 
     std::unique_ptr<std::ostream> pout, rout;
-    if(partitionsOut != "std")
+    if(partitionsOut != "std" and !partitionsOut.empty())
         pout = std::make_unique<std::ofstream>("../" + partitionsOut);
-    if(resultsOut != "std")
+    if(resultsOut != "std" and !resultsOut.empty())
         rout = std::make_unique<std::ofstream>("../" + resultsOut);
     std::chrono::duration<double> sumTime(0);
-    for(auto& [n, k] : inputParameters)
-        sumTime += generator->generatePartitions(n, k, partitionsOut == "std" ? &std::cout : pout.get(), resultsOut == "std" ? &std::cout : rout.get());
+    if(mode == "int")
+    {
+        auto generator = IntegerPartitionsGeneratorFactory::make(algorithm);
+        if(!generator)
+        {
+            message = "Unknown algorithm for integer partitions.\nPossible values:\n";
+            for(auto& a : IntegerPartitionsGeneratorFactory::algorithms)
+                message += "\t" + a + "\n";
+            std::cerr << message;
+            return -1;
+        }
+        for(auto&[n, k] : inputParameters)
+            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout));
+    }
+    else
+    {
+        auto generator = SetPartitionsGeneratorFactory::make(algorithm);
+        if(!generator)
+        {
+            message = "Unknown algorithm for set partitions.\nPossible values:\n";
+            for(auto& a : SetPartitionsGeneratorFactory::algorithms)
+                message += "\t" + a + "\n";
+            std::cerr << message;
+            return -1;
+        }
+        for(auto&[n, k] : inputParameters)
+            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout));
+    }
     std::cout << "Time elapsed:\n\t" << sumTime.count() << "ms\n";
 }
