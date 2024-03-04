@@ -1,8 +1,8 @@
 #ifndef PARTITIONSGENERATION_SIMPLEBACKTRACKINGSETPARTITIONSGENERATOR_H
 #define PARTITIONSGENERATION_SIMPLEBACKTRACKINGSETPARTITIONSGENERATOR_H
-#include "PartitionsGenerator.h"
+#include "SetPartitionsGenerator.h"
 
-class SimpleBacktrackingSetPartitionsGenerator : public PartitionsGenerator
+class SimpleBacktrackingSetPartitionsGenerator : public SetPartitionsGenerator
 {
 public:
     std::chrono::duration<double>

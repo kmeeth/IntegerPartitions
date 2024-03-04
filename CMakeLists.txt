@@ -11,5 +11,7 @@ add_executable(PartitionsGeneration cpp/main.cpp
         cpp/PartitionsGeneratorFactory.cpp
         cpp/SimpleBacktrackingSetPartitionsGenerator.cpp
         h/SimpleBacktrackingSetPartitionsGenerator.h
+        h/IntegerPartitionsGenerator.h
+        h/SetPartitionsGenerator.h
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

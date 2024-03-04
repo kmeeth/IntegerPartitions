@@ -1,0 +1,9 @@
+#ifndef PARTITIONSGENERATION_SETPARTITIONSGENERATOR_H
+#define PARTITIONSGENERATION_SETPARTITIONSGENERATOR_H
+#include "PartitionsGenerator.h"
+
+class SetPartitionsGenerator : public PartitionsGenerator
+{
+};
+
+#endif //PARTITIONSGENERATION_SETPARTITIONSGENERATOR_H
