@@ -8,19 +8,23 @@
 namespace
 {
     const std::vector<std::string> algorithms = {"SimpleBacktrackingInteger", "SimpleBacktrackingSet"};
-    std::string algorithm, input, message, partitionsOut, resultsOut;
+    const std::vector<std::string> visitors = {"Counter"};
+    const std::vector<std::string> modes = {"int", "set"};
+    std::string algorithm, visitor = "Counter", mode, input, message, partitionsOut, resultsOut;
     bool cache = false;
     int n = -1, k = -1;
 }
 
 /*
  * -alg <algorithm-name> : Name of the algorithm used (mandatory)
+ * -visit <visitor-name> : Name of the visitor used (default : Counter)
+ * -mode <int | set> : Whether set or int partitions are generated (mandatory)
  * -file <filename> : Name of the file used as input
  * -n <number> : Number to be partitioned if -file not specified
  * -k <number> : Number of parts for partitions if -file not specified
  * -cache : Caching will be used, if possible
  * -pout <filename | std> : Filename where generated partitions will be output, or std for std::cout
- * -rout <filename | std> : Filename where resulting count will be output, or std for std::cout
+ * -rout <filename | std> : Filename where results will be output, or std for std::cout
  */
 static bool getOptions(int argc, char* argv[])
 {
@@ -38,6 +42,10 @@ static bool getOptions(int argc, char* argv[])
         {
             if(currentOption == "-alg")
                 algorithm = token;
+            else if(currentOption == "-visit")
+                visitor = token;
+            else if(currentOption == "-mode")
+                mode = token;
             else if(currentOption == "-file")
                 input = token;
             else if(currentOption == "-n")
@@ -50,9 +58,9 @@ static bool getOptions(int argc, char* argv[])
                 resultsOut = token;
         }
     }
-    if(algorithm.empty())
+    if(algorithm.empty() or mode.empty())
     {
-        std::cerr << "-alg must be specified.";
+        std::cerr << "-alg and -mode must be specified.";
         return false;
     }
     if(std::find(algorithms.begin(), algorithms.end(), algorithm) == algorithms.end())
@@ -60,6 +68,20 @@ static bool getOptions(int argc, char* argv[])
         message = "Unknown algorithm.\nPossible values:\n";
         for(auto& a : algorithms)
             message += "\t" + a + "\n";
+        return false;
+    }
+    if(std::find(modes.begin(), modes.end(), mode) == modes.end())
+    {
+        message = "Unknown mode.\nPossible values:\n";
+        for(auto& m : modes)
+            message += "\t" + m + "\n";
+        return false;
+    }
+    if(std::find(visitors.begin(), visitors.end(), visitor) == visitors.end())
+    {
+        message = "Unknown visitor.\nPossible values:\n";
+        for(auto& v : visitors)
+            message += "\t" + v + "\n";
         return false;
     }
     if(input.empty() and (n == -1 or k == -1))
