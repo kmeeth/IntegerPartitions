@@ -36,7 +36,7 @@ static PartitionList part(const int n, const int k, const int min, const int max
 
 std::chrono::duration<double>
 SimpleBacktrackingIntegerPartitionsGenerator::generatePartitions(
-    int n, int k, std::ostream* partitionsOut, std::ostream* resultsOut) const
+    const int n, const int k, std::ostream* const partitionsOut, std::ostream* const resultsOut) const
 {
     auto start = std::chrono::high_resolution_clock::now();
     PartitionList allPartitions = part(n, k, 1, n);
