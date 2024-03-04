@@ -1,6 +1,5 @@
 #include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
 #include <vector>
-#include <immer/vector.hpp>
 
 namespace
 {

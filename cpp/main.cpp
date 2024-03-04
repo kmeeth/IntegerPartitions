@@ -7,7 +7,7 @@
 
 namespace
 {
-    const std::vector<std::string> algorithms = {"SimpleBacktrackingInteger"};
+    const std::vector<std::string> algorithms = {"SimpleBacktrackingInteger", "SimpleBacktrackingSet"};
     std::string algorithm, input, message, partitionsOut, resultsOut;
     bool cache = false;
     int n = -1, k = -1;

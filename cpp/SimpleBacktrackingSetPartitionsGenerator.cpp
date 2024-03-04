@@ -49,6 +49,7 @@ static PartitionList part(Subset& A, const int k)
         B.push_back(p);
         p.pop_back();
     }
+    A.push_back(a1);
     return B;
 }
 
