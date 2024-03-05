@@ -6,6 +6,7 @@
 #include <chrono>
 #include "h/IntegerPartitionsGeneratorFactory.h"
 #include "h/SetPartitionsGeneratorFactory.h"
+#include "h/IntegerPartitionVisitorFactory.h"
 
 namespace
 {
@@ -116,8 +117,17 @@ int main(int argc, char* argv[])
             std::cerr << message;
             return -1;
         }
+        auto v = IntegerPartitionVisitorFactory::make(visitor);
+        if(!v)
+        {
+            message = "Unknown visitor for integer partitions.\nPossible values:\n";
+            for(auto& a : IntegerPartitionVisitorFactory::visitors)
+                message += "\t" + a + "\n";
+            std::cerr << message;
+            return -1;
+        }
         for(auto&[n, k] : inputParameters)
-            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout));
+            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout), *v);
     }
     else
     {

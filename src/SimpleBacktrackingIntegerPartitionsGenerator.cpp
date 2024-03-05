@@ -4,13 +4,6 @@
 using Partition = IntegerPartitionsGenerator::Partition;
 using PartitionList = IntegerPartitionsGenerator::PartitionList;
 
-static std::ostream& operator<<(std::ostream& out, const Partition& partition)
-{
-    for(int i : partition)
-        out << i << ' ';
-    return out;
-}
-
 static PartitionList part(const int n, const int k, const int min, const int max)
 {
     if(k * min > n or k * max < n)
@@ -33,15 +26,13 @@ static PartitionList part(const int n, const int k, const int min, const int max
 
 std::chrono::duration<double>
 SimpleBacktrackingIntegerPartitionsGenerator::generatePartitions(
-    const int n, const int k, std::ostream* const partitionsOut, std::ostream* const resultsOut) const
+    const int n, const int k, std::ostream* const partitionsOut, std::ostream* const resultsOut, IntegerPartitionVisitor& visitor) const
 {
     auto start = std::chrono::high_resolution_clock::now();
     PartitionList allPartitions = part(n, k, 1, n);
     auto end = std::chrono::high_resolution_clock::now();
-    if(partitionsOut)
-        for(auto& partition : allPartitions)
-            *partitionsOut << partition << "\n";
-    if(resultsOut)
-        *resultsOut << allPartitions.size() << "\n";
+    for(auto& partition : allPartitions)
+        visitor.visit(partition, partitionsOut);
+    visitor.results(resultsOut);
     return end - start;
 }

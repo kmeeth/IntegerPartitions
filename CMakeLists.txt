@@ -5,7 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 project(PartitionsGeneration LANGUAGES CXX)
 add_executable(PartitionsGeneration src/main.cpp
         h/SimpleBacktrackingIntegerPartitionsGenerator.h
-        src/SimpleBacktrackingPartitionsGenerator.cpp
+        src/SimpleBacktrackingIntegerPartitionsGenerator.cpp
         src/SimpleBacktrackingSetPartitionsGenerator.cpp
         h/SimpleBacktrackingSetPartitionsGenerator.h
         h/IntegerPartitionsGenerator.h
@@ -16,5 +16,10 @@ add_executable(PartitionsGeneration src/main.cpp
         h/SetPartitionsGeneratorFactory.h
         h/IntegerPartitionVisitor.h
         h/SetPartitionVisitor.h
+        src/IntegerPartitionVisitorFactory.cpp
+        h/IntegerPartitionVisitorFactory.h
+        h/IntegerPartitionVisitorCounter.h
+        src/IntegerPartitionVisitorCounter.cpp
+        src/IntegerPartitionVisitor.cpp
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
