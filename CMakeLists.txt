@@ -14,5 +14,7 @@ add_executable(PartitionsGeneration src/main.cpp
         src/IntegerPartitionsGeneratorFactory.cpp
         src/SetPartitionsGeneratorFactory.cpp
         h/SetPartitionsGeneratorFactory.h
+        h/IntegerPartitionVisitor.h
+        h/SetPartitionVisitor.h
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
