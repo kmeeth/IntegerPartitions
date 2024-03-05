@@ -1,5 +1,5 @@
-#include "../h/IntegerPartitionVisitorFactory.h"
-#include "../h/IntegerPartitionVisitorCounter.h"
+#include "h/visitors/IntegerPartitionVisitorFactory.h"
+#include "h/visitors/IntegerPartitionVisitorCounter.h"
 
 const std::vector<std::string> IntegerPartitionVisitorFactory::visitors = {"Counter"};
 

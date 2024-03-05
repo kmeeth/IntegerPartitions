@@ -1,4 +1,4 @@
-#include "../h/IntegerPartitionVisitor.h"
+#include "h/visitors/IntegerPartitionVisitor.h"
 
 std::ostream& operator<<(std::ostream& out, const IntegerPartitionsGenerator::Partition& partition)
 {

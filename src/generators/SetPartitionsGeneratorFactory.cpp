@@ -1,4 +1,4 @@
-#include "../h/SetPartitionsGeneratorFactory.h"
+#include "h/generators/SetPartitionsGeneratorFactory.h"
 
 const std::vector<std::string> SetPartitionsGeneratorFactory::algorithms = {"SimpleBacktracking"};
 

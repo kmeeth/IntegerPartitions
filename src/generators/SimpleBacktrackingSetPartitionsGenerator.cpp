@@ -1,21 +1,10 @@
-#include "h/SimpleBacktrackingSetPartitionsGenerator.h"
+#include "h/generators/SimpleBacktrackingSetPartitionsGenerator.h"
+#include "h/visitors/SetPartitionVisitor.h"
 #include <vector>
 
 using Subset = SetPartitionsGenerator::Subset;
 using Partition = SetPartitionsGenerator::Partition;
 using PartitionList = SetPartitionsGenerator::PartitionList;
-
-static std::ostream& operator<<(std::ostream& out, const Partition& partition)
-{
-    for(const Subset& subset : partition)
-    {
-        out << "{ ";
-        for(int x : subset)
-            out << x << " ";
-        out << "}";
-    }
-    return out;
-}
 
 static PartitionList part(Subset& A, const int k)
 {
@@ -52,7 +41,7 @@ static PartitionList part(Subset& A, const int k)
 
 std::chrono::duration<double>
 SimpleBacktrackingSetPartitionsGenerator::generatePartitions(const int n, const int k, std::ostream* const partitionsOut,
-    std::ostream* const resultsOut) const
+    std::ostream* const resultsOut, SetPartitionVisitor& visitor) const
 {
     auto start = std::chrono::high_resolution_clock::now();
     Subset A;
@@ -60,10 +49,8 @@ SimpleBacktrackingSetPartitionsGenerator::generatePartitions(const int n, const 
         A.push_back(i + 1);
     PartitionList allPartitions = part(A, k);
     auto end = std::chrono::high_resolution_clock::now();
-    if(partitionsOut)
-        for(auto& partition : allPartitions)
-            *partitionsOut << partition << "\n";
-    if(resultsOut)
-        *resultsOut << allPartitions.size() << "\n";
+    for(auto& partition : allPartitions)
+        visitor.visit(partition, partitionsOut);
+    visitor.results(resultsOut);
     return end - start;
 }

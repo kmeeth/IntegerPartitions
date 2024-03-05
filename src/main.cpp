@@ -4,9 +4,10 @@
 #include <algorithm>
 #include <fstream>
 #include <chrono>
-#include "h/IntegerPartitionsGeneratorFactory.h"
-#include "h/SetPartitionsGeneratorFactory.h"
-#include "h/IntegerPartitionVisitorFactory.h"
+#include "h/generators/IntegerPartitionsGeneratorFactory.h"
+#include "h/generators/SetPartitionsGeneratorFactory.h"
+#include "h/visitors/IntegerPartitionVisitorFactory.h"
+#include "h/visitors/SetPartitionVisitorFactory.h"
 
 namespace
 {
@@ -117,17 +118,20 @@ int main(int argc, char* argv[])
             std::cerr << message;
             return -1;
         }
-        auto v = IntegerPartitionVisitorFactory::make(visitor);
-        if(!v)
-        {
-            message = "Unknown visitor for integer partitions.\nPossible values:\n";
-            for(auto& a : IntegerPartitionVisitorFactory::visitors)
-                message += "\t" + a + "\n";
-            std::cerr << message;
-            return -1;
-        }
         for(auto&[n, k] : inputParameters)
-            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout), *v);
+        {
+            auto v = IntegerPartitionVisitorFactory::make(visitor);
+            if (!v)
+            {
+                message = "Unknown visitor for integer partitions.\nPossible values:\n";
+                for (auto& a: IntegerPartitionVisitorFactory::visitors)
+                    message += "\t" + a + "\n";
+                std::cerr << message;
+                return -1;
+            }
+            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout),
+                (resultsOut != "std" ? rout.get() : &std::cout), *v);
+        }
     }
     else
     {
@@ -141,7 +145,19 @@ int main(int argc, char* argv[])
             return -1;
         }
         for(auto&[n, k] : inputParameters)
-            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout), (resultsOut != "std" ? rout.get() : &std::cout));
+        {
+            auto v = SetPartitionVisitorFactory::make(visitor);
+            if (!v)
+            {
+                message = "Unknown visitor for set partitions.\nPossible values:\n";
+                for (auto& a: SetPartitionVisitorFactory::visitors)
+                    message += "\t" + a + "\n";
+                std::cerr << message;
+                return -1;
+            }
+            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout),
+                (resultsOut != "std" ? rout.get() : &std::cout), *v);
+        }
     }
     std::cout << "Time elapsed:\n\t" << sumTime.count() << "ms\n";
 }

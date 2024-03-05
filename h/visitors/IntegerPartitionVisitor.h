@@ -1,6 +1,6 @@
 #ifndef PARTITIONSGENERATION_INTEGERPARTITIONVISITOR_H
 #define PARTITIONSGENERATION_INTEGERPARTITIONVISITOR_H
-#include "IntegerPartitionsGenerator.h"
+#include "h/generators/IntegerPartitionsGenerator.h"
 
 class IntegerPartitionVisitor
 {

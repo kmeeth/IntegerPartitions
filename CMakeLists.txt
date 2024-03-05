@@ -4,22 +4,27 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 project(PartitionsGeneration LANGUAGES CXX)
 add_executable(PartitionsGeneration src/main.cpp
-        h/SimpleBacktrackingIntegerPartitionsGenerator.h
-        src/SimpleBacktrackingIntegerPartitionsGenerator.cpp
-        src/SimpleBacktrackingSetPartitionsGenerator.cpp
-        h/SimpleBacktrackingSetPartitionsGenerator.h
-        h/IntegerPartitionsGenerator.h
-        h/SetPartitionsGenerator.h
-        h/IntegerPartitionsGeneratorFactory.h
-        src/IntegerPartitionsGeneratorFactory.cpp
-        src/SetPartitionsGeneratorFactory.cpp
-        h/SetPartitionsGeneratorFactory.h
-        h/IntegerPartitionVisitor.h
-        h/SetPartitionVisitor.h
-        src/IntegerPartitionVisitorFactory.cpp
-        h/IntegerPartitionVisitorFactory.h
-        h/IntegerPartitionVisitorCounter.h
-        src/IntegerPartitionVisitorCounter.cpp
-        src/IntegerPartitionVisitor.cpp
+        h/generators/SimpleBacktrackingIntegerPartitionsGenerator.h
+        src/generators/SimpleBacktrackingIntegerPartitionsGenerator.cpp
+        src/generators/SimpleBacktrackingSetPartitionsGenerator.cpp
+        h/generators/SimpleBacktrackingSetPartitionsGenerator.h
+        h/generators/IntegerPartitionsGenerator.h
+        h/generators/SetPartitionsGenerator.h
+        h/generators/IntegerPartitionsGeneratorFactory.h
+        src/generators/IntegerPartitionsGeneratorFactory.cpp
+        src/generators/SetPartitionsGeneratorFactory.cpp
+        h/generators/SetPartitionsGeneratorFactory.h
+        h/visitors/IntegerPartitionVisitor.h
+        h/visitors/SetPartitionVisitor.h
+        src/visitors/IntegerPartitionVisitorFactory.cpp
+        h/visitors/IntegerPartitionVisitorFactory.h
+        h/visitors/IntegerPartitionVisitorCounter.h
+        src/visitors/IntegerPartitionVisitorCounter.cpp
+        src/visitors/IntegerPartitionVisitor.cpp
+        src/visitors/SetPartitionVisitor.cpp
+        src/visitors/SetPartitionVisitorFactory.cpp
+        h/visitors/SetPartitionVisitorFactory.h
+        src/visitors/SetPartitionVisitorCounter.cpp
+        h/visitors/SetPartitionVisitorCounter.h
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

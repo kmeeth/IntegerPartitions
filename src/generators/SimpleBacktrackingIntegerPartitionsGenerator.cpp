@@ -1,4 +1,4 @@
-#include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
+#include "h/generators/SimpleBacktrackingIntegerPartitionsGenerator.h"
 #include <vector>
 
 using Partition = IntegerPartitionsGenerator::Partition;

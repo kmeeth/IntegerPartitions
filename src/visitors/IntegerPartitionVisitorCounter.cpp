@@ -1,4 +1,4 @@
-#include "../h/IntegerPartitionVisitorCounter.h"
+#include "h/visitors/IntegerPartitionVisitorCounter.h"
 
 void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut)
 {

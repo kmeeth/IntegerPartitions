@@ -1,7 +1,7 @@
 #ifndef INTEGERPARTITIONS_SIMPLEBACKTRACKINGPARTITIONSGENERATOR_H
 #define INTEGERPARTITIONS_SIMPLEBACKTRACKINGPARTITIONSGENERATOR_H
 #include "IntegerPartitionsGenerator.h"
-#include "IntegerPartitionVisitor.h"
+#include "h/visitors/IntegerPartitionVisitor.h"
 
 class SimpleBacktrackingIntegerPartitionsGenerator : public IntegerPartitionsGenerator
 {

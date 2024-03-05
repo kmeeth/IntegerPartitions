@@ -1,5 +1,5 @@
-#include "../h/IntegerPartitionsGeneratorFactory.h"
-#include "../h/SimpleBacktrackingIntegerPartitionsGenerator.h"
+#include "h/generators/IntegerPartitionsGeneratorFactory.h"
+#include "h/generators/SimpleBacktrackingIntegerPartitionsGenerator.h"
 
 const std::vector<std::string> IntegerPartitionsGeneratorFactory::algorithms = {"SimpleBacktracking"};
 
