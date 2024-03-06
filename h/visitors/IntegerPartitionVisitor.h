@@ -6,9 +6,9 @@ class IntegerPartitionVisitor
 {
 public:
     // Visits a partition and prints it if partitionOut is present.
-    virtual void visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut) = 0;
+    virtual void visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut) {}
     // Computes the results and prints them to resultsOut if present.
-    virtual void results(std::ostream* resultsOut) = 0;
+    virtual void results(std::ostream* resultsOut) {};
     virtual ~IntegerPartitionVisitor() = default;
     friend std::ostream& operator<<(std::ostream&, const IntegerPartitionsGenerator::Partition&);
 };
