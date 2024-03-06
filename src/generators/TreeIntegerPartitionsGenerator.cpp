@@ -16,7 +16,7 @@ static void generateTree(Node& cur, const int n, const int k, std::ostream* cons
     int& m = cur.partCount;
 
     if(depth % 2 == 0)
-        visitor.visit(a, partitionsOut);
+        visitor.visit(a, k, partitionsOut);
 
     if(a[0] > a[1])
     {
@@ -35,7 +35,7 @@ static void generateTree(Node& cur, const int n, const int k, std::ostream* cons
     }
 
     if(depth % 2 == 1)
-        visitor.visit(cur.partition, partitionsOut);
+        visitor.visit(cur.partition, k, partitionsOut);
 }
 
 std::chrono::duration<double>
