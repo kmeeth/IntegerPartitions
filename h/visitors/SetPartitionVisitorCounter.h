@@ -8,7 +8,7 @@ public:
     void visit(SetPartitionsGenerator::Partition& partition, std::ostream* partitionOut) override;
     void results(std::ostream* resultsOut) override;
 private:
-    int count = 0;
+    unsigned long long count = 0;
 };
 
 #endif //PARTITIONSGENERATION_SETPARTITIONVISITORCOUNTER_H
