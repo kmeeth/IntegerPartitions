@@ -159,5 +159,5 @@ int main(int argc, char* argv[])
                 (resultsOut != "std" ? rout.get() : &std::cout), *v);
         }
     }
-    std::cout << "Time elapsed:\n\t" << sumTime.count() << "ms\n";
+    std::cout << "Time elapsed:\n\t" << sumTime.count() << "s\n";
 }
