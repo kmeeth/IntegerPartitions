@@ -60,9 +60,9 @@ static bool getOptions(int argc, char* argv[])
                 resultsOut = token;
         }
     }
-    if(algorithm.empty() or mode.empty())
+    if(mode.empty())
     {
-        std::cerr << "-alg and -mode must be specified.";
+        std::cerr << "-mode must be specified.";
         return false;
     }
     if(std::find(modes.begin(), modes.end(), mode) == modes.end())
