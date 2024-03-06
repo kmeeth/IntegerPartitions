@@ -46,9 +46,9 @@ TreeIntegerPartitionsGenerator::generatePartitions(const int n, const int k, std
 
     Partition rootPartition;
     rootPartition.reserve(k + 1);
-    for(int i = 0; i < k + 1; i++)
+    for(int i = 0; i < k; i++)
         rootPartition.push_back(0);
-    rootPartition[0] = n;
+    rootPartition[0] = n - k;
     Node rootNode = {rootPartition, 1};
 
     // n becomes n - k; see comment above.
