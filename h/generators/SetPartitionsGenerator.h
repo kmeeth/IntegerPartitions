@@ -14,6 +14,7 @@ public:
     using Subset = std::vector<int>;
     using Partition = std::vector<Subset>;
     using PartitionList = std::vector<Partition>;
+    using RGS = std::vector<int>;
 };
 
 #endif //PARTITIONSGENERATION_SETPARTITIONSGENERATOR_H

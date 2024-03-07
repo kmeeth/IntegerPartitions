@@ -11,3 +11,14 @@ std::ostream& operator<<(std::ostream& out, const SetPartitionsGenerator::Partit
     }
     return out;
 }
+
+void SetPartitionVisitor::printRGS(std::ostream& out, const SetPartitionsGenerator::RGS& rgs)
+{
+    SetPartitionsGenerator::Partition partition;
+    for(int i = 0; i < rgs.size(); i++)
+        if(rgs[i] >= partition.size())
+            partition.push_back({i + 1});
+        else
+            partition[rgs[i]].push_back(i + 1);
+    out << partition;
+}
