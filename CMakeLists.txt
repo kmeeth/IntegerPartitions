@@ -28,5 +28,7 @@ add_executable(PartitionsGeneration src/main.cpp
         h/visitors/SetPartitionVisitorCounter.h
         src/generators/TreeIntegerPartitionsGenerator.cpp
         h/generators/TreeIntegerPartitionsGenerator.h
+        src/generators/FilterSetPartitionsGenerator.cpp
+        h/generators/FilterSetPartitionsGenerator.h
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
