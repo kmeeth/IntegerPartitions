@@ -8,7 +8,6 @@ static void iterate(SetPartitionsGenerator::RGS& a, std::vector<int>& b, const i
         visitor.visit(a, partitionsOut);
     while(true)
     {
-
         int c = n - 1;
         while(a[c] == k - 1 or a[c] > b[c]) c--;
         if(c == 0) return;
@@ -19,7 +18,7 @@ static void iterate(SetPartitionsGenerator::RGS& a, std::vector<int>& b, const i
             b[i] = std::max(a[i - 1], b[i - 1]);
         }
         if(std::max(a[n - 1], b[n - 1]) != k - 1)
-            for(int i = n - 1, k0 = k - 1; i >= 0 and k0 >= 1 and k0 >= b[i]; i--, k0--)
+            for(int i = n - 1, k0 = k - 1; i >= 0 and k0 >= 1 and k0 > b[i]; i--, k0--)
             {
                 a[i] = k0;
                 b[i] = k0 - 1;
