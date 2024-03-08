@@ -30,5 +30,7 @@ add_executable(PartitionsGeneration src/main.cpp
         h/generators/TreeIntegerPartitionsGenerator.h
         src/generators/FilterSetPartitionsGenerator.cpp
         h/generators/FilterSetPartitionsGenerator.h
+        src/generators/ConjugationIntegerPartitionsGenerator.cpp
+        h/generators/ConjugationIntegerPartitionsGenerator.h
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
