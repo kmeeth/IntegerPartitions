@@ -4,12 +4,14 @@
 static void iterate(SetPartitionsGenerator::RGS& a, std::vector<int>& b, const int k, std::ostream* const partitionsOut, SetPartitionVisitor& visitor)
 {
     const int n = static_cast<int>(a.size());
+    if(k == 1)
+        visitor.visit(a, partitionsOut);
     while(true)
     {
-        visitor.visit(a, partitionsOut);
+
         int c = n - 1;
-        while(a[c] == k - 1 or a[c] - b[c]) c--;
-        if(c == 1) return;
+        while(a[c] == k - 1 or a[c] > b[c]) c--;
+        if(c == 0) return;
         a[c]++;
         for(int i = c + 1; i < n; i++)
         {
@@ -22,6 +24,7 @@ static void iterate(SetPartitionsGenerator::RGS& a, std::vector<int>& b, const i
                 a[i] = k0;
                 b[i] = k0 - 1;
             }
+        visitor.visit(a, partitionsOut);
     }
 }
 
@@ -39,5 +42,5 @@ FilterSetPartitionsGenerator::generatePartitions(const int n, const int k, std::
     iterate(a, b, k, partitionsOut, visitor);
     auto end = std::chrono::high_resolution_clock::now();
     visitor.results(resultsOut);
-    return start - end;
+    return end - start;
 }

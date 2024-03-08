@@ -11,7 +11,10 @@ void SetPartitionVisitorCounter::visit(SetPartitionsGenerator::RGS& rgs, std::os
 {
     count++;
     if(partitionOut)
+    {
         printRGS(*partitionOut, rgs);
+        *partitionOut << "\n";
+    }
 }
 
 void SetPartitionVisitorCounter::results(std::ostream* resultsOut)
