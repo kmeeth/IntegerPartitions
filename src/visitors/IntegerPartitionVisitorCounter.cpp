@@ -11,17 +11,22 @@ void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition
     }
 }
 
-void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut)
+void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut,
+    bool conjugate)
 {
     count++;
     if(partitionOut)
-        *partitionOut << partition << "\n";
+    {
+        if(conjugate)
+            printConjugate(*partitionOut, partition);
+        else
+            *partitionOut << partition;
+        *partitionOut << "\n";
+    }
 }
 
 void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
 {
-    if(resultsOut)
+    if (resultsOut)
         *resultsOut << count << "\n";
 }
-
-

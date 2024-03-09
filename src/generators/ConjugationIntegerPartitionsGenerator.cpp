@@ -4,7 +4,7 @@
 static void part(IntegerPartitionsGenerator::Partition& a, const int n, const int B, const int c, IntegerPartitionVisitor& visitor, std::ostream* partitionOut)
 {
     if(n == 0)
-        visitor.visit(a, partitionOut);
+        visitor.visit(a, partitionOut, false);
     else
         for(int i = 1; i <= std::min(B, n); i++)
         {
