@@ -15,16 +15,14 @@ void IntegerPartitionVisitor::printOffset(std::ostream& out, const IntegerPartit
         out << "1 ";
 }
 
-void IntegerPartitionVisitor::printConjugate(std::ostream& out, const IntegerPartitionsGenerator::Partition& partition)
+void IntegerPartitionVisitor::printConjugate(std::ostream& out, const IntegerPartitionsGenerator::Partition& partition, const int length)
 {
     int originalIndex = 0;
     int counter = 0;
     for(int printIndex = partition[0] - 1; printIndex >= 0; printIndex--)
     {
-        while (originalIndex < partition.size() and partition[originalIndex] > printIndex)
-        {
-            counter++; originalIndex++;
-        }
-        out << counter << " ";
+        while (originalIndex < length and partition[originalIndex] > printIndex)
+            originalIndex++;
+        out << originalIndex << " ";
     }
 }

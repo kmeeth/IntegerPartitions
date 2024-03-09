@@ -4,11 +4,11 @@
 static void part(IntegerPartitionsGenerator::Partition& a, const int n, const int B, const int c, IntegerPartitionVisitor& visitor, std::ostream* partitionOut)
 {
     if(n == 0)
-        visitor.visit(a, partitionOut, false);
+        visitor.visitConjugate(a, c + 1, partitionOut);
     else
         for(int i = 1; i <= std::min(B, n); i++)
         {
-            a[c + 1] = i + 1;
+            a[c + 1] = i;
             part(a, n - i, i, c + 1, visitor, partitionOut);
         }
 }
