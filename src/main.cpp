@@ -8,12 +8,12 @@
 #include "h/generators/SetPartitionsGeneratorFactory.h"
 #include "h/visitors/IntegerPartitionVisitorFactory.h"
 #include "h/visitors/SetPartitionVisitorFactory.h"
+#include "h/Config.h"
 
 namespace
 {
     const std::vector<std::string> modes = {"int", "set"};
     std::string algorithm = "SimpleBacktracking", visitor = "Counter", mode, input, message, partitionsOut, resultsOut;
-    bool cache = false;
     int n = -1, k = -1;
 }
 
@@ -25,6 +25,7 @@ namespace
  * -n <number> : Number to be partitioned if -file not specified
  * -k <number> : Number of parts for partitions if -file not specified
  * -cache : Caching will be used, if possible
+ * -threads : Number of threads used (default : 1)
  * -pout <filename | std> : Filename where generated partitions will be output, or std for std::cout
  * -rout <filename | std> : Filename where results will be output, or std for std::cout
  */
@@ -38,7 +39,7 @@ static bool getOptions(int argc, char* argv[])
         {
             currentOption = token;
             if(currentOption == "-cache")
-                cache = true;
+                Config::cache = true;
         }
         else
         {
@@ -58,6 +59,8 @@ static bool getOptions(int argc, char* argv[])
                 partitionsOut = token;
             else if(currentOption == "-rout")
                 resultsOut = token;
+            else if(currentOption == "-threads")
+                Config::threads = std::stoi(token);
         }
     }
     if(mode.empty())
