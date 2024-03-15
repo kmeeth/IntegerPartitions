@@ -1,4 +1,4 @@
-#include "h/generators/TreeIntegerPartitionsGenerator.h"
+#include "h/generators/ParallelTreeIntegerPartitionsGenerator.h"
 #include "h/visitors/IntegerPartitionVisitor.h"
 
 namespace
@@ -42,7 +42,7 @@ static void generateTree(Node& cur, const int n, const int k, std::ostream* cons
 }
 
 std::chrono::duration<double>
-TreeIntegerPartitionsGenerator::generatePartitions(const int n, const int k, std::ostream* const partitionsOut,
+ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const int k, std::ostream* const partitionsOut,
     std::ostream* const resultsOut, IntegerPartitionVisitor& visitor) const
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -61,3 +61,4 @@ TreeIntegerPartitionsGenerator::generatePartitions(const int n, const int k, std
     visitor.results(resultsOut);
     return end - start;
 }
+
