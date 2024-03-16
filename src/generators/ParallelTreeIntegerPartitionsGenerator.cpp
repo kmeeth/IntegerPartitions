@@ -21,24 +21,26 @@ namespace
     public:
         static std::atomic<int> count;
         static std::mutex partitionOutMutex;
-        static void work(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+        static void work(Node cur, const int n, const int k, std::ostream* const partitionsOut,
             IntegerPartitionVisitor& visitor, const int depth, const int batch)
         {
             generateTree(cur, n, k, partitionsOut, visitor, depth, batch);
             count--;
         }
-        Worker(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+        Worker(const Node& cur, const int n, const int k, std::ostream* const partitionsOut,
             IntegerPartitionVisitor& visitor, const int depth)
-            : myBatch(count), myThread(work, std::ref(cur), n, k, partitionsOut, std::ref(visitor), depth, count++)
+            : myThread(work, cur, n, k, partitionsOut, std::ref(visitor), depth, count++)
         {
         }
         void join()
         {
             myThread.join();
         }
-    private:
+        void detach()
+        {
+            myThread.detach();
+        }
         std::thread myThread;
-        int myBatch;
     };
     std::atomic<int> Worker::count = 1;
     std::mutex Worker::partitionOutMutex;
@@ -66,10 +68,7 @@ namespace
             {
                 a[0]--; a[m++] = 1;
                 if(Config::threads > Worker::count)
-                {
-                    Node copy = cur;
-                    worker = std::make_unique<Worker>(copy, n, k, partitionsOut, visitor, depth + 1);
-                }
+                    worker = std::make_unique<Worker>(cur, n, k, partitionsOut, visitor, depth + 1);
                 else
                     generateTree(cur, n, k, partitionsOut, visitor, depth + 1, batch);
                 a[--m] = 0; a[0]++;
@@ -104,8 +103,10 @@ ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const in
 
     // n becomes n - k; see comment above.
     generateTree(rootNode, n - k, k, partitionsOut, visitor, 0, 0);
+    while(Worker::count != 1) {}
 
     auto end = std::chrono::high_resolution_clock::now();
+
     visitor.results(resultsOut);
     return end - start;
 }
