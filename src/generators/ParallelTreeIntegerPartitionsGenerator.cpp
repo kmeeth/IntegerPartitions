@@ -1,5 +1,9 @@
+#include <atomic>
+#include <mutex>
+#include <thread>
 #include "h/generators/ParallelTreeIntegerPartitionsGenerator.h"
 #include "h/visitors/IntegerPartitionVisitor.h"
+#include "h/Config.h"
 
 namespace
 {
@@ -8,38 +12,82 @@ namespace
         IntegerPartitionsGenerator::Partition partition;
         int partCount; // Used for fast access, no need to count every time.
     };
-}
 
-// This function generates the tree of all partitions with <= k parts! The visitor is expected to handle the conversion,
-// as described in the paper.
-static void generateTree(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
-    IntegerPartitionVisitor& visitor, const int depth)
-{
-    IntegerPartitionsGenerator::Partition& a = cur.partition;
-    int& m = cur.partCount;
+    void generateTree(Node& cur, int n, int k, std::ostream* partitionsOut,
+        IntegerPartitionVisitor& visitor, int depth, int batch);
 
-    if(depth % 2 == 0)
-        visitor.visit(a, k, partitionsOut);
-
-    if(a[0] > a[1])
+    class Worker
     {
-        if(m < k)
+    public:
+        static std::atomic<int> count;
+        static std::mutex partitionOutMutex;
+        static void work(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+            IntegerPartitionVisitor& visitor, const int depth, const int batch)
         {
-            a[0]--; a[m++] = 1;
-            generateTree(cur, n, k, partitionsOut, visitor, depth + 1);
-            a[--m] = 0; a[0]++;
+            generateTree(cur, n, k, partitionsOut, visitor, depth, batch);
+            count--;
         }
-        if(m >= 2 and (m > 2 or a[m - 2] - a[m - 1] > 1) and a[m - 2] > a[m - 1])
+        Worker(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+            IntegerPartitionVisitor& visitor, const int depth)
+            : myBatch(count), myThread(work, std::ref(cur), n, k, partitionsOut, std::ref(visitor), depth, count++)
         {
-            a[0]--; a[m - 1]++;
-            generateTree(cur, n, k, partitionsOut, visitor, depth + 1);
-            a[m - 1]--; a[0]++;
         }
-    }
+        void join()
+        {
+            myThread.join();
+        }
+    private:
+        std::thread myThread;
+        int myBatch;
+    };
+    std::atomic<int> Worker::count = 1;
+    std::mutex Worker::partitionOutMutex;
 
-    if(depth % 2 == 1)
-        visitor.visit(cur.partition, k, partitionsOut);
+    // This function generates the tree of all partitions with <= k parts! The visitor is expected to handle the conversion,
+    // as described in the paper.
+    void generateTree(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+        IntegerPartitionVisitor& visitor, const int depth, const int batch)
+    {
+        IntegerPartitionsGenerator::Partition& a = cur.partition;
+        int& m = cur.partCount;
+        std::unique_ptr<Worker> worker = nullptr;
+
+        if(partitionsOut)
+        {
+            auto lock = std::lock_guard<std::mutex>(Worker::partitionOutMutex);
+            visitor.visit(a, k, partitionsOut, batch);
+        }
+        else
+            visitor.visit(a, k, partitionsOut, batch);
+
+        if(a[0] > a[1])
+        {
+            if(m < k)
+            {
+                a[0]--; a[m++] = 1;
+                if(Config::threads > Worker::count)
+                {
+                    Node copy = cur;
+                    worker = std::make_unique<Worker>(copy, n, k, partitionsOut, visitor, depth + 1);
+                }
+                else
+                    generateTree(cur, n, k, partitionsOut, visitor, depth + 1, batch);
+                a[--m] = 0; a[0]++;
+            }
+            if(m >= 2 and (m > 2 or a[m - 2] - a[m - 1] > 1) and a[m - 2] > a[m - 1])
+            {
+                a[0]--; a[m - 1]++;
+                generateTree(cur, n, k, partitionsOut, visitor, depth + 1, batch);
+                a[m - 1]--; a[0]++;
+            }
+        }
+
+        if(worker)
+            worker->join();
+    }
 }
+
+
 
 std::chrono::duration<double>
 ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const int k, std::ostream* const partitionsOut,
@@ -55,7 +103,7 @@ ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const in
     Node rootNode = {rootPartition, 1};
 
     // n becomes n - k; see comment above.
-    generateTree(rootNode, n - k, k, partitionsOut, visitor, 0);
+    generateTree(rootNode, n - k, k, partitionsOut, visitor, 0, 0);
 
     auto end = std::chrono::high_resolution_clock::now();
     visitor.results(resultsOut);

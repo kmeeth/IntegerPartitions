@@ -1,10 +1,11 @@
 #ifndef PARTITIONSGENERATION_CONFIG_H
 #define PARTITIONSGENERATION_CONFIG_H
+#include <atomic>
 
 class Config
 {
 public:
-    static int threads;
+    static std::atomic<int> threads;
     static bool cache;
 };
 

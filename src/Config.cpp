@@ -1,4 +1,4 @@
 #include "h/Config.h"
 
 bool Config::cache = false;
-int Config::threads = 1;
+std::atomic<int> Config::threads = 1;
