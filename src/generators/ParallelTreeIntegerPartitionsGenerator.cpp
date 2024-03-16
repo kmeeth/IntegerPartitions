@@ -25,12 +25,16 @@ namespace
             IntegerPartitionVisitor& visitor, const int depth, const int batch)
         {
             generateTree(cur, n, k, partitionsOut, visitor, depth, batch);
-            count--;
         }
         Worker(const Node& cur, const int n, const int k, std::ostream* const partitionsOut,
             IntegerPartitionVisitor& visitor, const int depth)
-            : myThread(work, cur, n, k, partitionsOut, std::ref(visitor), depth, count++)
+            : myThread(work, cur, n, k, partitionsOut, std::ref(visitor), depth, count + 0)
         {
+            count++;
+        }
+        ~Worker()
+        {
+            count--;
         }
         void join()
         {
