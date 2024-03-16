@@ -1,6 +1,9 @@
 #include <atomic>
 #include <mutex>
 #include <thread>
+#include <deque>
+#include <iostream>
+#include <semaphore>
 #include "h/generators/ParallelTreeIntegerPartitionsGenerator.h"
 #include "h/visitors/IntegerPartitionVisitor.h"
 #include "h/Config.h"
@@ -19,22 +22,43 @@ namespace
     class Worker
     {
     public:
-        static std::atomic<int> count;
+        static std::deque<int> cpuQueue;
         static std::mutex partitionOutMutex;
+        static std::mutex cpuQueueMutex;
+        static std::binary_semaphore cpuQueueFull;
+        static unsigned long long cpuCount;
         static void work(Node cur, const int n, const int k, std::ostream* const partitionsOut,
             IntegerPartitionVisitor& visitor, const int depth, const int batch)
         {
             generateTree(cur, n, k, partitionsOut, visitor, depth, batch);
+            {
+                auto lock = std::lock_guard<std::mutex>(cpuQueueMutex);
+                cpuQueue.push_back(batch);
+                if(cpuQueue.size() == Worker::cpuCount)
+                    cpuQueueFull.release();
+            }
         }
-        Worker(const Node& cur, const int n, const int k, std::ostream* const partitionsOut,
-            IntegerPartitionVisitor& visitor, const int depth)
-            : myThread(work, cur, n, k, partitionsOut, std::ref(visitor), depth, count + 0)
+        Worker(Node& cur, const int n, const int k, std::ostream* const partitionsOut,
+            IntegerPartitionVisitor& visitor, const int depth, const int currentBatch)
         {
-            count++;
-        }
-        ~Worker()
-        {
-            count--;
+            {
+                auto lock = std::lock_guard<std::mutex>(cpuQueueMutex);
+                if(!cpuQueue.empty())
+                {
+                    myBatch = cpuQueue.front();
+                    cpuQueue.pop_front();
+                }
+                else
+                    myBatch = currentBatch;
+
+            }
+            if(myBatch != currentBatch)
+            {
+                myThread = std::thread(work, cur, n, k, partitionsOut, std::ref(visitor), depth, myBatch);
+                myThread.detach();
+            }
+            else
+                generateTree(cur, n, k, partitionsOut, visitor, depth, currentBatch);
         }
         void join()
         {
@@ -44,10 +68,13 @@ namespace
         {
             myThread.detach();
         }
+        int myBatch;
         std::thread myThread;
     };
-    std::atomic<int> Worker::count = 1;
-    std::mutex Worker::partitionOutMutex;
+    unsigned long long Worker::cpuCount;
+    std::deque<int> Worker::cpuQueue;
+    std::mutex Worker::partitionOutMutex, Worker::cpuQueueMutex;
+    std::binary_semaphore Worker::cpuQueueFull(0);
 
     // This function generates the tree of all partitions with <= k parts! The visitor is expected to handle the conversion,
     // as described in the paper.
@@ -56,7 +83,6 @@ namespace
     {
         IntegerPartitionsGenerator::Partition& a = cur.partition;
         int& m = cur.partCount;
-        std::unique_ptr<Worker> worker = nullptr;
 
         if(partitionsOut)
         {
@@ -71,10 +97,7 @@ namespace
             if(m < k)
             {
                 a[0]--; a[m++] = 1;
-                if(Config::threads > Worker::count)
-                    worker = std::make_unique<Worker>(cur, n, k, partitionsOut, visitor, depth + 1);
-                else
-                    generateTree(cur, n, k, partitionsOut, visitor, depth + 1, batch);
+                Worker worker = Worker(cur, n, k, partitionsOut, visitor, depth + 1, batch);
                 a[--m] = 0; a[0]++;
             }
             if(m >= 2 and (m > 2 or a[m - 2] - a[m - 1] > 1) and a[m - 2] > a[m - 1])
@@ -84,9 +107,6 @@ namespace
                 a[m - 1]--; a[0]++;
             }
         }
-
-        if(worker)
-            worker->join();
     }
 }
 
@@ -98,6 +118,10 @@ ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const in
 {
     auto start = std::chrono::high_resolution_clock::now();
 
+    for(int i = 1; i < Config::threads; i++)
+        Worker::cpuQueue.push_back(i);
+    Worker::cpuCount = Worker::cpuQueue.size();
+
     Partition rootPartition;
     rootPartition.reserve(k + 1);
     for(int i = 0; i < k; i++)
@@ -107,7 +131,9 @@ ParallelTreeIntegerPartitionsGenerator::generatePartitions(const int n, const in
 
     // n becomes n - k; see comment above.
     generateTree(rootNode, n - k, k, partitionsOut, visitor, 0, 0);
-    while(Worker::count != 1) {}
+
+    if(Worker::cpuCount > 0)
+        Worker::cpuQueueFull.acquire();
 
     auto end = std::chrono::high_resolution_clock::now();
 
