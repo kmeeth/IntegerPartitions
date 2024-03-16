@@ -5,6 +5,7 @@
 class Config
 {
 public:
+    static constexpr int maxBatch = 128;
     static std::atomic<int> threads;
     static bool cache;
 };

@@ -33,5 +33,5 @@ void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition
 void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
 {
     if (resultsOut)
-        *resultsOut << std::accumulate(count, count + maxBatch, 0ULL) << "\n";
+        *resultsOut << std::accumulate(count, count + Config::maxBatch, 0ULL) << "\n";
 }

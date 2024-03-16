@@ -1,6 +1,7 @@
 #ifndef PARTITIONSGENERATION_INTEGERPARTITIONVISITORCOUNTER_H
 #define PARTITIONSGENERATION_INTEGERPARTITIONVISITORCOUNTER_H
 #include "IntegerPartitionVisitor.h"
+#include "../Config.h"
 
 class IntegerPartitionVisitorCounter : public IntegerPartitionVisitor
 {
@@ -11,8 +12,7 @@ public:
     visitConjugate(IntegerPartitionsGenerator::Partition& partition, int length, std::ostream* partitionOut, int batch = 0) override;
     void results(std::ostream* resultsOut) override;
 private:
-    static constexpr int maxBatch = 128;
-    unsigned long long count[128] = {};
+    unsigned long long count[Config::maxBatch] = {};
 };
 
 #endif //PARTITIONSGENERATION_INTEGERPARTITIONVISITORCOUNTER_H
