@@ -8,5 +8,5 @@ IntegerPartitionVisitorBenchmark::IntegerPartitionVisitorBenchmark()
 void IntegerPartitionVisitorBenchmark::results(std::ostream* resultsOut)
 {
     if(resultsOut)
-        *resultsOut << std::chrono::high_resolution_clock::now() - startTime << "\n";
+        *resultsOut << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime)  << "\n";
 }
