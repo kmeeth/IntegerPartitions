@@ -101,7 +101,6 @@ int main(int argc, char* argv[])
         {
             file >> n >> k;
             inputParameters.emplace_back(n,k);
-            std::cout << n << " " <<  k << "\n";
         }
     }
 
