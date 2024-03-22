@@ -36,5 +36,7 @@ add_executable(PartitionsGeneration src/main.cpp
         src/Config.cpp
         src/generators/ParallelTreeIntegerPartitionsGenerator.cpp
         h/generators/ParallelTreeIntegerPartitionsGenerator.h
+        h/visitors/IntegerPartitionVisitorBenchmark.h
+        src/visitors/IntegerPartitionVisitorBenchmark.cpp
 )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
