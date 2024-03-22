@@ -106,9 +106,9 @@ int main(int argc, char* argv[])
 
     std::unique_ptr<std::ostream> pout, rout;
     if(partitionsOut != "std" and !partitionsOut.empty())
-        pout = std::make_unique<std::ofstream>("../" + partitionsOut);
+        pout = std::make_unique<std::ofstream>("../test/" + partitionsOut);
     if(resultsOut != "std" and !resultsOut.empty())
-        rout = std::make_unique<std::ofstream>("../" + resultsOut);
+        rout = std::make_unique<std::ofstream>("../test/" + resultsOut);
     std::chrono::duration<double> sumTime(0);
     if(mode == "int")
     {
