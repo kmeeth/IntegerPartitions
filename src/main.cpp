@@ -50,7 +50,7 @@ static bool getOptions(int argc, char* argv[])
             else if(currentOption == "-mode")
                 mode = token;
             else if(currentOption == "-file")
-                input = token;
+                input = "../test/" + token;
             else if(currentOption == "-n")
                 n = std::stoi(token);
             else if(currentOption == "-k")
