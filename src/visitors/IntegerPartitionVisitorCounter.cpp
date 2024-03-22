@@ -33,5 +33,16 @@ void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition
 void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
 {
     if (resultsOut)
-        *resultsOut << std::accumulate(count, count + Config::maxBatch, 0ULL) << "\n";
+    {
+        *resultsOut
+        << "##########################\n"
+        << "Count:\t" << std::accumulate(count, count + Config::maxBatch, 0ULL) << "\n"
+        << "Time:\t" << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime) << "\n"
+        << "##########################\n";
+    }
+}
+
+IntegerPartitionVisitorCounter::IntegerPartitionVisitorCounter()
+    :startTime(std::chrono::high_resolution_clock::now())
+{
 }
