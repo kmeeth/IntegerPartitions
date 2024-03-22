@@ -37,7 +37,7 @@ void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
         *resultsOut
         << "##########################\n"
         << "Count:\t" << std::accumulate(count, count + Config::maxBatch, 0ULL) << "\n"
-        << "Time:\t" << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime) << "\n"
+        << "Time:\t" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime) << "\n"
         << "##########################\n";
     }
 }

@@ -97,10 +97,11 @@ int main(int argc, char* argv[])
     else
     {
         std::ifstream file(input);
-        while(file)
+        while(!file.eof())
         {
             file >> n >> k;
             inputParameters.emplace_back(n,k);
+            std::cout << n << " " <<  k << "\n";
         }
     }
 
