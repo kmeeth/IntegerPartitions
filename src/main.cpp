@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
                 return -1;
             }
             const int K = k > 0 ? k : n + k;
-            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout),
+            sumTime += generator->generatePartitions(n, K, (partitionsOut != "std" ? pout.get() : &std::cout),
                 (resultsOut != "std" ? rout.get() : &std::cout), *v);
         }
     }
@@ -159,7 +159,8 @@ int main(int argc, char* argv[])
                 std::cerr << message;
                 return -1;
             }
-            sumTime += generator->generatePartitions(n, k, (partitionsOut != "std" ? pout.get() : &std::cout),
+            const int K = k > 0 ? k : n + k;
+            sumTime += generator->generatePartitions(n, K, (partitionsOut != "std" ? pout.get() : &std::cout),
                 (resultsOut != "std" ? rout.get() : &std::cout), *v);
         }
     }
