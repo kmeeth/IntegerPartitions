@@ -14,7 +14,7 @@ namespace
 {
     const std::vector<std::string> modes = {"int", "set"};
     std::string algorithm = "SimpleBacktracking", visitor = "Counter", mode, input, message, partitionsOut, resultsOut;
-    int n = -1, k = -1;
+    int n = 0, k = 0;
 }
 
 /*
@@ -75,7 +75,7 @@ static bool getOptions(int argc, char* argv[])
             message += "\t" + m + "\n";
         return false;
     }
-    if(input.empty() and (n == -1 or k == -1))
+    if(input.empty() and (n == 0 or k == 0))
     {
         message = "Either -file or -n and -k must be specified.";
         return false;
