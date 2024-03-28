@@ -4,7 +4,7 @@ void SetPartitionVisitorCounter::visit(SetPartitionsGenerator::Partition& partit
 {
     count++;
     if(partitionOut)
-        *partitionOut << partition;
+        *partitionOut << partition << "\n";
 }
 
 void SetPartitionVisitorCounter::visit(SetPartitionsGenerator::RGS& rgs, std::ostream* partitionOut)
