@@ -8,7 +8,9 @@ sys.setrecursionlimit(2**31-1)
 
 @cache
 def partition(n, k):
-    if k == n or k == 1:
+    if k == 0 and n == 0:
+        return 1
+    if k == n:
         return 1
     if n <= 0 or k <= 0:
         return 0
