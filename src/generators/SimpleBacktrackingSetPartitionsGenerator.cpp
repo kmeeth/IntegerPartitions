@@ -48,9 +48,9 @@ SimpleBacktrackingSetPartitionsGenerator::generatePartitions(const int n, const 
     for(int i = 0; i < n; i++)
         A.push_back(i + 1);
     PartitionList allPartitions = part(A, k);
-    auto end = std::chrono::high_resolution_clock::now();
     for(auto& partition : allPartitions)
         visitor.visit(partition, partitionsOut);
     visitor.results(resultsOut);
+    auto end = std::chrono::high_resolution_clock::now();
     return end - start;
 }

@@ -30,9 +30,9 @@ SimpleBacktrackingIntegerPartitionsGenerator::generatePartitions(
 {
     auto start = std::chrono::high_resolution_clock::now();
     PartitionList allPartitions = part(n, k, 1, n);
-    auto end = std::chrono::high_resolution_clock::now();
     for(auto& partition : allPartitions)
         visitor.visit(partition, partitionsOut);
     visitor.results(resultsOut);
+    auto end = std::chrono::high_resolution_clock::now();
     return end - start;
 }
