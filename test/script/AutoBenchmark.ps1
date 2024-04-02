@@ -16,6 +16,7 @@ function Start-NewJob {
         [string]$program,
         [string]$arguments
     )
+    Write-Output $program $arguments
 
     $job = Start-Job -ScriptBlock {
         param($program, $arguments)
@@ -61,7 +62,7 @@ foreach($a in $algs) {
 
 
                 # Start a new job with your program and arguments
-                $program = "../../bin/PartitionGeneration.exe"
+                $program = "AppTimedWrapper.ps1"
                 $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k_actual)
                 Start-NewJob -program $program -arguments $arguments
             }
@@ -89,10 +90,8 @@ foreach($a in $algs) {
                 $alg = $a[1]
                 $rout = "../test/output/" + $alg + "_" + $n + "_" + $k_actual + "." + $mode
 
-
-
                 # Start a new job with your program and arguments
-                $program = "../../bin/PartitionGeneration.exe"
+                $program = "AppTimedWrapper.ps1"
                 $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k_actual)
                 Start-NewJob -program $program -arguments $arguments
             }
