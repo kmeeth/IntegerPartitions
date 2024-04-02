@@ -1,6 +1,6 @@
 param (
     [string[]]$appArguments,
-    [int]$timeoutInMs = 360000 # Default timeout is 1 hour
+    [int]$timeoutInMs = 3600000 # Default timeout is 1 hour
 )
 
 try {
