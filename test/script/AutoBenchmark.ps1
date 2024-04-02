@@ -35,65 +35,54 @@ function Check-JobCompletion {
     }
 }
 
+function Iterate
+{
+    param(
+        [System.Object]$a,
+        [int]$n,
+        [int]$k
+    )
+    if($k -eq 0) {
+        $k = $n / 2
+    }
+    if($k -lt 0) {
+        $k = $k + $n
+    }
+    if($k -gt $n) {
+        return
+    }
+    Write-Output $n $k
+
+    # Check if the maximum number of processes is reached
+    while ($jobs.Count -ge $maxProcesses) {
+        Start-Sleep -Seconds 5
+        Check-JobCompletion
+    }
+
+    $mode = $a[0]
+    $alg = $a[1]
+    $rout = "../test/output/" + $alg + "_" + $n + "_" + $k + "." + $mode
+
+    # Start a new job with your program and arguments
+    $program = "AppTimedWrapper.ps1"
+    $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k)
+    Start-NewJob -program $program -arguments $arguments
+
+}
+
 # Main loop to manage starting new jobs
 foreach($a in $algs) {
     if($a[0] -eq "int") {
         foreach($n in $N_int) {
             foreach($k in $K_int) {
-                $k_actual = $k
-                if($k -eq 0) {
-                    $k_actual = $n / 2
-                }
-                if($k -lt 0){
-                    $k_actual = $k + $n
-                }
-                Write-Output ("" + $n + ", " + $k_actual)
-
-                # Check if the maximum number of processes is reached
-                while ($jobs.Count -ge $maxProcesses) {
-                    Start-Sleep -Seconds 5
-                    Check-JobCompletion
-                }
-
-                $mode = $a[0]
-                $alg = $a[1]
-                $rout = "../test/output/" + $alg + "_" + $n + "_" + $k_actual + "." + $mode
-
-
-
-                # Start a new job with your program and arguments
-                $program = "AppTimedWrapper.ps1"
-                $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k_actual)
-                Start-NewJob -program $program -arguments $arguments
+                Iterate $a $n $k
             }
         }
     }
     else {
         foreach($n in $N_set) {
             foreach($k in $K_set) {
-                $k_actual = $k
-                if($k -eq 0) {
-                    $k_actual = $n / 2
-                }
-                if($k -lt 0){
-                    $k_actual = $k + $n
-                }
-                Write-Output ("" + $n + ", " + $k_actual)
-
-                # Check if the maximum number of processes is reached
-                while ($jobs.Count -ge $maxProcesses) {
-                    Start-Sleep -Seconds 5
-                    Check-JobCompletion
-                }
-
-                $mode = $a[0]
-                $alg = $a[1]
-                $rout = "../test/output/" + $alg + "_" + $n + "_" + $k_actual + "." + $mode
-
-                # Start a new job with your program and arguments
-                $program = "AppTimedWrapper.ps1"
-                $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k_actual)
-                Start-NewJob -program $program -arguments $arguments
+                Iterate $a $n $k
             }
         }
     }
