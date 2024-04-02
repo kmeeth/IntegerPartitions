@@ -24,6 +24,7 @@ if __name__ == "__main__":
     files = ["back.int", "conj.int", "tree.int", "back.set", "filt.set"]
 
     for file in files:
-        sort_lines(file, file)
+        f = "../output/" + file
+        sort_lines(f, f)
 
     print("Lines sorted successfully!")

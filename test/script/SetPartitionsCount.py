@@ -21,14 +21,14 @@ def main():
 
     for k in K:
         for n in N:
-            with open("out.txt", mode="a") as file:
+            with open("../output/partitionCount.set", mode="a") as file:
                 k_actual = k
                 if k_actual < 0:
                     k_actual += n
                 elif k_actual == 0.5:
                     k_actual = n // 2
                 file.write(f"{partition(n, k_actual)} ")
-        with open("out.txt", mode="a") as file:
+        with open("../output/partitionCount.set", mode="a") as file:
             file.write("\n")
 
 

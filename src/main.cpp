@@ -50,7 +50,7 @@ static bool getOptions(int argc, char* argv[])
             else if(currentOption == "-mode")
                 mode = token;
             else if(currentOption == "-file")
-                input = "../test/" + token;
+                input = "../test/input/" + token;
             else if(currentOption == "-n")
                 n = std::stoi(token);
             else if(currentOption == "-k")
@@ -106,9 +106,9 @@ int main(int argc, char* argv[])
 
     std::unique_ptr<std::ostream> pout, rout;
     if(partitionsOut != "std" and !partitionsOut.empty())
-        pout = std::make_unique<std::ofstream>("../test/" + partitionsOut);
+        pout = std::make_unique<std::ofstream>("../test/output/" + partitionsOut);
     if(resultsOut != "std" and !resultsOut.empty())
-        rout = std::make_unique<std::ofstream>("../test/" + resultsOut);
+        rout = std::make_unique<std::ofstream>("../test/output/" + resultsOut);
     std::chrono::duration<double> sumTime(0);
     if(mode == "int")
     {
