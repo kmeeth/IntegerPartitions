@@ -14,21 +14,17 @@ $jobs = @()
 function Start-NewJob {
     param(
         [string]$program,
-        [string]$arguments
+        [string]$appArguments
     )
-    Write-Output $program $arguments
+    $argumentList = "-appArguments `"$appArguments`""
 
-    $job = Start-Job -ScriptBlock {
-        param($program, $arguments)
-        & $program $arguments
-    } -ArgumentList $program, $arguments
-
+    $job = Start-Process "AppTimedWrapper.ps1" -ArgumentList $argumentList -PassThru -ErrorAction Stop
     $jobs += $job
 }
 
 # Check if any jobs have completed and remove them from the list
 function Check-JobCompletion {
-    $completedJobs = $jobs | Where-Object { $_.State -eq 'Completed' }
+    $completedJobs = $jobs | Where-Object { $_.HasExited }
     foreach ($completedJob in $completedJobs) {
         $jobs.Remove($completedJob) | Out-Null
         $completedJob | Remove-Job
@@ -61,7 +57,7 @@ function Iterate
 
     $mode = $a[0]
     $alg = $a[1]
-    $rout = "../test/output/" + $alg + "_" + $n + "_" + $k + "." + $mode
+    $rout = $alg + "_" + $n + "_" + $k + "." + $mode
 
     # Start a new job with your program and arguments
     $program = "AppTimedWrapper.ps1"
