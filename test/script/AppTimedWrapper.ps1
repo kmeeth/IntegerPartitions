@@ -10,6 +10,7 @@ try {
     $processStartInfo.Arguments = $argumentArray
     $processStartInfo.RedirectStandardOutput = $true
     $processStartInfo.UseShellExecute = $false
+    $processStartInfo.WorkingDirectory = "../../bin"
     $process = [System.Diagnostics.Process]::Start($processStartInfo)
     $output = $process.StandardOutput.ReadToEnd()
     # Wait for the process to finish or timeout
