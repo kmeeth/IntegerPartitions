@@ -29,9 +29,9 @@ function Start-NewJob {
 
 # Check if any jobs have completed and remove them from the list
 function Check-JobCompletion {
-    $completedJobs = $jobs | Where-Object { $_.Finished }
+    $completedJobs = $global:jobs | Where-Object { $_.Finished }
     foreach ($completedJob in $completedJobs) {
-        $jobs.Remove($completedJob)
+        $global:jobs.Remove($completedJob)
     }
 }
 
@@ -53,8 +53,8 @@ function Iterate
     }
 
     # Check if the maximum number of processes is reached
-    while ($jobs.Count -ge $maxProcesses) {
-        Write-Output $jobs.Count
+    while ($global:jobs.Count -ge $maxProcesses) {
+        Write-Output $global:jobs.Count
         Start-Sleep -Seconds 5
         Check-JobCompletion
     }
@@ -87,8 +87,8 @@ foreach($a in $algs) {
     }
 }
 # Join all
-while ($jobs.Count -gt 0) {
-    Write-Output $jobs.Count
+while ($global:jobs.Count -gt 0) {
+    Write-Output $global:jobs.Count
     Start-Sleep -Seconds 5
     Check-JobCompletion
 }
