@@ -1,5 +1,5 @@
 param (
-    [string]$appArguments,
+    [string]$appArguments = "-mode int -alg Tree -visit Counter -rout out.txt -n 10000 -k 3000",
     [int]$timeoutInMs = 3600000 # Default timeout is 1 hour
 )
 
