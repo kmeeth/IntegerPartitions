@@ -8,7 +8,7 @@ param (
 )
 
 # List to keep track of running jobs
-$jobs = @()
+[System.Object[]]$jobs = @()
 
 # Function to start a new job
 function Start-NewJob {
@@ -29,10 +29,11 @@ function Start-NewJob {
 
 # Check if any jobs have completed and remove them from the list
 function Check-JobCompletion {
-    $completedJobs = $global:jobs | Where-Object { $_.Finished }
-    foreach ($completedJob in $completedJobs) {
-        $global:jobs.Remove($completedJob)
-    }
+    Write-Output $global:jobs
+    $global:jobs = $global:jobs | Where-Object { $_.State -ne "Completed" }
+    Write-Output "becomes"
+    Write-Output $global:jobs
+    Write-Output "###################"
 }
 
 function Iterate
@@ -54,7 +55,6 @@ function Iterate
 
     # Check if the maximum number of processes is reached
     while ($global:jobs.Count -ge $maxProcesses) {
-        Write-Output $global:jobs.Count
         Start-Sleep -Seconds 5
         Check-JobCompletion
     }
@@ -88,7 +88,6 @@ foreach($a in $algs) {
 }
 # Join all
 while ($global:jobs.Count -gt 0) {
-    Write-Output $global:jobs.Count
     Start-Sleep -Seconds 5
     Check-JobCompletion
 }
