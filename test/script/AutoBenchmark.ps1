@@ -4,7 +4,7 @@ param (
     [int[]]$N_set = @(14),#, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 50, 60),
     [int[]]$K_set = @(2),#, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3, 0.5),
     [System.Object[]]$algs = @(@("int", "Tree"), @("int", "Conjugation"), @("int", "SimpleBacktracking"), @("set", "Filter"), @("set", "SimpleBacktracking")),
-    [int]$maxProcesses = 1
+    [int]$maxProcesses = 2
 )
 
 # List to keep track of running jobs
@@ -13,24 +13,18 @@ param (
 # Function to start a new job
 function Start-NewJob {
     param(
-        [string]$program,
         [string]$appArguments
     )
     $argumentList = "-appArguments `"$appArguments`""
     Write-Output $argumentList
-    $scriptBlock = {
-        param($arguments)
-        & "AppTimedWrapper.ps1" $arguments
-        [console]::Beep()
-    }
-    $job = Start-Job -ScriptBlock $scriptBlock -ArgumentList $argumentList
+    $job = Start-Process -FilePath AppTimedWrapper.ps1 -ArgumentList $argumentList -PassThru
     $global:jobs += $job
 }
 
 # Check if any jobs have completed and remove them from the list
 function Check-JobCompletion {
     Write-Output $global:jobs
-    $global:jobs = $global:jobs | Where-Object { $_.State -ne "Completed" }
+    $global:jobs = $global:jobs | Where-Object { -not $_.HasExited }
     Write-Output "becomes"
     Write-Output $global:jobs
     Write-Output "###################"
@@ -64,9 +58,8 @@ function Iterate
     $rout = $alg + "_" + $n + "_" + $k + "." + $mode
 
     # Start a new job with your program and arguments
-    $program = "AppTimedWrapper.ps1"
     $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Counter -rout " + $rout + " -n " + $n + " -k " + $k)
-    Start-NewJob -program $program -appArguments $arguments
+    Start-NewJob -appArguments $arguments
 }
 
 # Main loop to manage starting new jobs
