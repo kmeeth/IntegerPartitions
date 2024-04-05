@@ -4,6 +4,7 @@ param (
 )
 
 try {
+    Write-Output $appArguments
     $argumentArray = $appArguments -split '\s+'
     $processStartInfo = New-Object System.Diagnostics.ProcessStartInfo
     $processStartInfo.FileName = "../../bin/PartitionsGeneration.exe"
