@@ -8,7 +8,7 @@ param (
 )
 
 # List to keep track of running jobs
-[System.Diagnostics.Process[]]$jobs = @()
+[System.Diagnostics.Process[]]$script:jobs = @()
 
 # Function to start a new job
 function Start-NewJob {
@@ -16,16 +16,15 @@ function Start-NewJob {
         [string]$appArguments
     )
     Write-Output $appArguments
-    $job = Start-Process -FilePath "powershell.exe" -ArgumentList "-File", "AppTimedWrapper.ps1", "-appArguments", "`"$appArguments`"" -PassThru
-    $global:jobs += $job
+    $script:jobs += Start-Process -FilePath "powershell.exe" -ArgumentList "-File", "AppTimedWrapper.ps1", "-appArguments", "`"$appArguments`"" -PassThru
 }
 
 # Check if any jobs have completed and remove them from the list
 function Check-JobCompletion {
-    Write-Output $global:jobs
-    $global:jobs = $global:jobs | Where-Object { -not $_.HasExited }
+    Write-Output $script:jobs
+    $script:jobs = $script:jobs | Where-Object { -not $_.HasExited }
     Write-Output "becomes"
-    Write-Output $global:jobs
+    Write-Output $script:jobs
     Write-Output "###################"
 }
 
@@ -47,7 +46,7 @@ function Iterate
     }
 
     # Check if the maximum number of processes is reached
-    while ($global:jobs.Count -ge $maxProcesses) {
+    while ($script:jobs.Count -ge $maxProcesses) {
         Start-Sleep -Seconds 5
         Check-JobCompletion
     }
@@ -79,7 +78,7 @@ foreach($a in $algs) {
     }
 }
 # Join all
-while ($global:jobs.Count -gt 0) {
+while ($script:jobs.Count -gt 0) {
     Start-Sleep -Seconds 5
     Check-JobCompletion
 }
