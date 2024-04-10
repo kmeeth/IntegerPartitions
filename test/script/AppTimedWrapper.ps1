@@ -1,6 +1,6 @@
 param (
     [string]$appArguments = "-mode int -alg Tree -visit Counter -rout out.txt -n 1 -k 1",
-    [int]$timeoutInMs = 3600000 # Default timeout is 1 hour
+    [int]$timeoutInMs = 1 * 60 * 60 * 1000 # Default timeout is 1 hour
 )
 
 try {
@@ -20,6 +20,15 @@ try {
         Write-Host ($appArguments + " completed with exit code $($process.ExitCode)")
     } else {
         Write-Host ($appArguments + " timed out. Killing...")
+        $outFile = "../output/"
+        $argumentList = $appArguments.Split("-")
+        foreach($entry in $argumentList){
+            if($entry -like "*rout*"){
+                $outFile += $entry.Split(" ")[1]
+                Add-Content -Path $outFile -Value "TIME"
+                break
+            }
+        }
         $process.Kill()
     }
     Write-Output $output
