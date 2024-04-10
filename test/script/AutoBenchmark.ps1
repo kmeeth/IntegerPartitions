@@ -2,13 +2,16 @@ param (
     [int[]]$N_int = @(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 600000, 70000, 80000, 90000, 100000),
     [int[]]$K_int = @(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 150, 200, 250, 300, -2 , -3, -4, 0),
     [int[]]$N_set = @(14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 50, 60),
-    [int[]]$K_set = @(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3, 0.5),
+    [int[]]$K_set = @(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3, 0),
     [System.Object[]]$algs = @(@("int", "Tree"), @("int", "Conjugation"), @("int", "SimpleBacktracking"), @("set", "Filter"), @("set", "SimpleBacktracking")),
-    [int]$maxProcesses = 4
+    [int]$maxProcesses = 4,
+    [int]$maxMinutes = 12 * 60
 )
 
 # List to keep track of running jobs
 [System.Diagnostics.Process[]]$script:jobs = @()
+# Start moment
+$script:startMoment = Get-Date
 
 # Function to start a new job
 function Start-NewJob {
@@ -48,6 +51,17 @@ function Iterate
     # Check if the maximum number of processes is reached
     while ($script:jobs.Count -ge $maxProcesses) {
         Start-Sleep -Seconds 5
+        $currentMoment = Get-Date
+        if($script:startMoment.AddMinutes($maxMinutes) -lt $currentMoment) {
+            Write-Output "TIME IS PAST KILLING ALL"
+            foreach($job in $script:jobs){
+                if(-not $job.HasExited){
+                    $job.Terminate()
+                }
+            }
+            exit
+        }
+
         Check-JobCompletion
     }
 
