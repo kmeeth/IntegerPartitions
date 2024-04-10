@@ -5,7 +5,7 @@ param (
     [int[]]$K_set = @(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3, 0),
     [System.Object[]]$algs = @(@("int", "Tree"), @("int", "Conjugation"), @("int", "SimpleBacktracking"), @("set", "Filter"), @("set", "SimpleBacktracking")),
     [int]$maxProcesses = 4,
-    [int]$maxMinutes = 12 * 60
+    [int]$maxMinutes = 12 * 60 * 0
 )
 
 # List to keep track of running jobs
