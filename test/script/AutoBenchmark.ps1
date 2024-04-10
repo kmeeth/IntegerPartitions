@@ -56,7 +56,7 @@ function Iterate
             Write-Output "TIME IS PAST KILLING ALL"
             foreach($job in $script:jobs){
                 if(-not $job.HasExited){
-                    $job.Terminate()
+                    $job.Kill()
                 }
             }
             exit
