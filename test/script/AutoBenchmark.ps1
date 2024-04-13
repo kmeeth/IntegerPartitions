@@ -51,18 +51,23 @@ function Iterate
     # Check if the maximum number of processes is reached
     while ($script:jobs.Count -ge $maxProcesses) {
         Start-Sleep -Seconds 5
+        Check-JobCompletion
         $currentMoment = Get-Date
         if($script:startMoment.AddMinutes($maxMinutes) -lt $currentMoment) {
             Write-Output "TIME IS PAST KILLING ALL"
             foreach($job in $script:jobs){
                 if(-not $job.HasExited){
-                    $job.Kill()
+                    Write-Output $job
+                    try {
+                        $job.Kill()
+                    }
+                    catch{
+                        Write-Host "An error occurred: $_.Exception.Message"
+                    }
                 }
             }
             exit
         }
-
-        Check-JobCompletion
     }
 
     $mode = $a[0]
