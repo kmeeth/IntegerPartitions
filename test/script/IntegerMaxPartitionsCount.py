@@ -19,16 +19,16 @@ def partition(n, k):
 
 def main():
     N = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000]
-
     for n in N:
-        mx, best = 0, 1
+        k_last, p_last = 0, -1
         for k in range(1, n + 1):
             p = partition(n, k)
-            mx = max(mx, p)
-            if mx == p:
-                best = k
+            if p <= p_last:
+                break
+            k_last = k
+            p_last = p
         with open("../output/maxPartitionCount.int", mode="a") as file:
-            file.write(f"{n} : {best} - {mx}\n")
+            file.write(f"{n} : {k_last} - {p_last}\n")
     with open("../output/maxPartitionCount.int", mode="a") as file:
         file.write("\n")
 
