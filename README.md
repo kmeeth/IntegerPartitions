@@ -8,6 +8,8 @@ In order to run a set of benchmarks, use the script `AutoBenchmark.ps1`, located
 This will generate outputs in `test/output`, named after each `(n, k, algorithm)` triplet evaluated. Examples that timed out will have `TIME` written in their files. Those that are empty have either crashed (memory problems) or forcefully closed.
 Those with the `.int` suffix are associated with integer partitions, while the `.set` suffix indicates set partitioning.
 
+The default timeout for a single pair is `1 * 60 * 60 * 1000 = 3600000ms = 1 hour`. Change in the `AppTimedWrapper.ps1` script directly if necessary.
+
 ## Section 2 : The PartitionsGeneration.exe
 There is most likely no need to run the application directly for benchmarking purposes, as the scripts do a better job at that. If running directly is necessary, consult the `src/main.cpp` documentation comment that explains the various command line arguments used by the 
 program. 
