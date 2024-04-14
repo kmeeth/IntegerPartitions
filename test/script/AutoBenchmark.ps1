@@ -63,16 +63,10 @@ function Iterate
         Check-JobCompletion
         $currentMoment = Get-Date
         if($script:startMoment.AddMinutes($maxMinutes) -lt $currentMoment) {
-            Write-Output "TIME IS PAST KILLING ALL"
+            Write-Output "TIME IS PAST KILL ALL"
             foreach($job in $script:jobs){
                 if(-not $job.HasExited){
                     Write-Output $job
-                    try {
-                        $job.Kill()
-                    }
-                    catch{
-                        Write-Host "An error occurred: $_.Exception.Message"
-                    }
                 }
             }
             exit
