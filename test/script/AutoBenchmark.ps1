@@ -48,6 +48,15 @@ function Iterate
         return
     }
 
+    $mode = $a[0]
+    $alg = $a[1]
+    $rout = $alg + "_" + $n + "_" + $k + "." + $mode
+
+    # Skip the tuple if already evaluated.
+    if(Test-Path -Path ("../output/" + $rout)){
+        return
+    }
+
     # Check if the maximum number of processes is reached
     while ($script:jobs.Count -ge $maxProcesses) {
         Start-Sleep -Seconds 5
@@ -70,9 +79,6 @@ function Iterate
         }
     }
 
-    $mode = $a[0]
-    $alg = $a[1]
-    $rout = $alg + "_" + $n + "_" + $k + "." + $mode
 
     # Start a new job with your program and arguments
     $arguments = ("-mode " + $mode + " -alg " + $alg + " -visit Benchmark -rout " + $rout + " -n " + $n + " -k " + $k)
