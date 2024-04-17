@@ -39,4 +39,6 @@ add_executable(PartitionsGeneration src/main.cpp
         src/visitors/SetPartitionVisitorBenchmark.cpp
         h/visitors/SetPartitionVisitorBenchmark.h
 )
+
+MESSAGE( WARNING "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
 target_include_directories(PartitionsGeneration PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
