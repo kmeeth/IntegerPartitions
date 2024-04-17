@@ -2,7 +2,6 @@
 #define PARTITIONSGENERATION_INTEGERPARTITIONVISITORCOUNTER_H
 #include "IntegerPartitionVisitor.h"
 #include <chrono>
-#include "../Config.h"
 
 class IntegerPartitionVisitorCounter : public IntegerPartitionVisitor
 {
@@ -13,7 +12,7 @@ public:
     void results(std::ostream* resultsOut) override;
     IntegerPartitionVisitorCounter();
 private:
-    unsigned long long count[Config::maxBatch] = {};
+    unsigned long long count[256] = {};
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
 };
 

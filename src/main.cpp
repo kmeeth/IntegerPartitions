@@ -8,7 +8,6 @@
 #include "h/generators/SetPartitionsGeneratorFactory.h"
 #include "h/visitors/IntegerPartitionVisitorFactory.h"
 #include "h/visitors/SetPartitionVisitorFactory.h"
-#include "h/Config.h"
 
 namespace
 {
@@ -38,8 +37,6 @@ static bool getOptions(int argc, char* argv[])
         if(token[0] == '-')
         {
             currentOption = token;
-            if(currentOption == "-cache")
-                Config::cache = true;
         }
         else
         {
@@ -59,8 +56,6 @@ static bool getOptions(int argc, char* argv[])
                 partitionsOut = token;
             else if(currentOption == "-rout")
                 resultsOut = token;
-            else if(currentOption == "-threads")
-                Config::threads = std::stoi(token);
         }
     }
     if(mode.empty())

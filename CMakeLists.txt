@@ -32,8 +32,6 @@ add_executable(PartitionsGeneration src/main.cpp
         h/generators/FilterSetPartitionsGenerator.h
         src/generators/ConjugationIntegerPartitionsGenerator.cpp
         h/generators/ConjugationIntegerPartitionsGenerator.h
-        h/Config.h
-        src/Config.cpp
         h/visitors/IntegerPartitionVisitorBenchmark.h
         src/visitors/IntegerPartitionVisitorBenchmark.cpp
         src/visitors/SetPartitionVisitorBenchmark.cpp

@@ -35,7 +35,7 @@ void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
     if (resultsOut)
     {
         *resultsOut
-        << "Count:\t" << std::accumulate(count, count + Config::maxBatch, 0ULL) << "\n"
+        << "Count:\t" << std::accumulate(count, count + 256, 0ULL) << "\n"
         << "Time:\t" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime) << "\n"
         << "##########################\n";
         resultsOut->flush();
