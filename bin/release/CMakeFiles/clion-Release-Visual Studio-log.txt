@@ -5,8 +5,8 @@
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.36.32532/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
-CMake Warning at CMakeLists.txt:44 (MESSAGE):
-  CMAKE_CXX_FLAGS: /O2 /Ob2 /DNDEBUG
+CMake Warning at CMakeLists.txt:45 (MESSAGE):
+  CMAKE_CXX_FLAGS: /O2 /Ob2 /DNDEBUG /MT
 
 
 -- Configuring done (1.6s)
