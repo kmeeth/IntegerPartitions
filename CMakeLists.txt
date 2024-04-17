@@ -34,8 +34,6 @@ add_executable(PartitionsGeneration src/main.cpp
         h/generators/ConjugationIntegerPartitionsGenerator.h
         h/Config.h
         src/Config.cpp
-        src/generators/ParallelTreeIntegerPartitionsGenerator.cpp
-        h/generators/ParallelTreeIntegerPartitionsGenerator.h
         h/visitors/IntegerPartitionVisitorBenchmark.h
         src/visitors/IntegerPartitionVisitorBenchmark.cpp
         src/visitors/SetPartitionVisitorBenchmark.cpp
