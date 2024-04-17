@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <chrono>
+#include <string>
 #include "h/generators/IntegerPartitionsGeneratorFactory.h"
 #include "h/generators/SetPartitionsGeneratorFactory.h"
 #include "h/visitors/IntegerPartitionVisitorFactory.h"
