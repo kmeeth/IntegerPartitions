@@ -1,0 +1,23 @@
+# ninja log v5
+15	2631	7337727246379365	CMakeFiles/PartitionsGeneration.dir/src/generators/SimpleBacktrackingIntegerPartitionsGenerator.cpp.obj	be07d4a0c0cbd939
+3383	5531	7337727275501848	CMakeFiles/PartitionsGeneration.dir/src/visitors/IntegerPartitionVisitorCounter.cpp.obj	364eeaa2c15a5b69
+19	2653	7337727246521180	CMakeFiles/PartitionsGeneration.dir/src/generators/IntegerPartitionsGeneratorFactory.cpp.obj	bb1dfdfb2845001f
+4916	6922	7337727289543764	CMakeFiles/PartitionsGeneration.dir/src/visitors/SetPartitionVisitorCounter.cpp.obj	f8c766a152c84374
+2653	4777	7337727267930366	CMakeFiles/PartitionsGeneration.dir/src/visitors/IntegerPartitionVisitorFactory.cpp.obj	e71ed86fdb4a366a
+2	3562	7338621802304439	CMakeFiles/PartitionsGeneration.dir/src/main.cpp.obj	abf545d2bf9678da
+5531	7598	7337727296307797	CMakeFiles/PartitionsGeneration.dir/src/visitors/SetPartitionVisitorFactory.cpp.obj	3cbb43c522ec5406
+4777	6833	7337727288652077	CMakeFiles/PartitionsGeneration.dir/src/generators/SetPartitionsGeneratorFactory.cpp.obj	58e21cc521783769
+2632	4916	7337727269476368	CMakeFiles/PartitionsGeneration.dir/src/generators/SimpleBacktrackingSetPartitionsGenerator.cpp.obj	b9f3ae99fb33461c
+6922	8955	7337727309884012	CMakeFiles/PartitionsGeneration.dir/src/visitors/IntegerPartitionVisitor.cpp.obj	e455dbe3237700f9
+7599	9728	7337727317602382	CMakeFiles/PartitionsGeneration.dir/src/visitors/SetPartitionVisitor.cpp.obj	185e651f0d103820
+8955	10999	7337727330304840	CMakeFiles/PartitionsGeneration.dir/src/generators/TreeIntegerPartitionsGenerator.cpp.obj	98293201b607d52d
+9728	9919	7337727319545295	CMakeFiles/PartitionsGeneration.dir/src/Config.cpp.obj	f308ef16ffdb3f2b
+8867	10960	7337727329820853	CMakeFiles/PartitionsGeneration.dir/src/generators/FilterSetPartitionsGenerator.cpp.obj	f3e745b1e5c4ce9e
+9920	12011	7337727340434688	CMakeFiles/PartitionsGeneration.dir/src/visitors/IntegerPartitionVisitorBenchmark.cpp.obj	fd1212c3d1759ce0
+3562	4336	7338621810094662	D:/Data/dev/PartitionsGeneration/bin/PartitionsGeneration.exe	718cf7e5cd31ca34
+6833	8867	7337727308981935	CMakeFiles/PartitionsGeneration.dir/src/generators/ConjugationIntegerPartitionsGenerator.cpp.obj	9a77517102959438
+10999	12959	7337727349918718	CMakeFiles/PartitionsGeneration.dir/src/visitors/SetPartitionVisitorBenchmark.cpp.obj	3d8daab3b690b86f
+10960	13164	7337727351951136	CMakeFiles/PartitionsGeneration.dir/src/generators/ParallelTreeIntegerPartitionsGenerator.cpp.obj	6fc38c6e4dbc0245
+7	336	7350475609753440	build.ninja	6cb1af380c6ac776
+0	2648	7350475636455386	CMakeFiles/PartitionsGeneration.dir/src/generators/IntegerPartitionsGeneratorFactory.cpp.obj	bb1dfdfb2845001f
+2648	3167	7350475641649563	D:/Data/dev/PartitionsGeneration/bin/PartitionsGeneration.exe	d85cbd71f5ac9847
