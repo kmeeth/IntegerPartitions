@@ -1,8 +1,14 @@
 "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S D:\Data\dev\PartitionsGeneration -B D:\Data\dev\PartitionsGeneration\bin\release
-CMake Warning at CMakeLists.txt:43 (MESSAGE):
-  CMAKE_CXX_FLAGS: /DWIN32 /D_WINDOWS /EHsc
+-- The CXX compiler identification is MSVC 19.36.32537.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.36.32532/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Warning at CMakeLists.txt:44 (MESSAGE):
+  CMAKE_CXX_FLAGS: /O2 /Ob2 /DNDEBUG
 
 
--- Configuring done (0.0s)
+-- Configuring done (1.6s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/Data/dev/PartitionsGeneration/bin/release
