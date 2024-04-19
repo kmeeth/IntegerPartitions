@@ -4,7 +4,7 @@ param (
     [int[]]$N_set = @(14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 50, 60),
     [int[]]$K_set = @(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3),
     [System.Object[]]$algs = @(@("int", "Tree"), @("int", "Conjugation"), @("int", "SimpleBacktracking"), @("set", "Filter"), @("set", "SimpleBacktracking")),
-    [int]$maxProcesses = 96,
+    [int]$maxProcesses = 48,
     [int]$maxMinutes = 12 * 60
 )
 
