@@ -6,13 +6,13 @@
 class IntegerPartitionVisitorCounter : public IntegerPartitionVisitor
 {
 public:
-    void visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut, int batch = 0) override;
-    void visit(IntegerPartitionsGenerator::Partition& partition, int offset, std::ostream* partitionOut, int batch = 0) override;
-    void visitConjugate(IntegerPartitionsGenerator::Partition& partition, int length, std::ostream* partitionOut, int batch = 0) override;
+    void visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut) override;
+    void visit(IntegerPartitionsGenerator::Partition& partition, int offset, std::ostream* partitionOut) override;
+    void visitConjugate(IntegerPartitionsGenerator::Partition& partition, int length, std::ostream* partitionOut) override;
     void results(std::ostream* resultsOut) override;
     IntegerPartitionVisitorCounter();
 private:
-    unsigned long long count[256] = {};
+    unsigned long long count = 0;
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
 };
 

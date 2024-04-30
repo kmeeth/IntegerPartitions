@@ -2,9 +2,9 @@
 #include "h/visitors/IntegerPartitionVisitorCounter.h"
 
 void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, int offset,
-    std::ostream* partitionOut, int batch)
+    std::ostream* partitionOut)
 {
-    count[batch]++;
+    count++;
     if(partitionOut)
     {
         printOffset(*partitionOut, partition, offset);
@@ -13,9 +13,9 @@ void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition
 }
 
 void IntegerPartitionVisitorCounter::visitConjugate(IntegerPartitionsGenerator::Partition& partition, int length,
-    std::ostream* partitionOut, int batch)
+    std::ostream* partitionOut)
 {
-    count[batch]++;
+    count++;
     if(partitionOut)
     {
         printConjugate(*partitionOut, partition, length);
@@ -23,9 +23,9 @@ void IntegerPartitionVisitorCounter::visitConjugate(IntegerPartitionsGenerator::
     }
 }
 
-void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut, int batch)
+void IntegerPartitionVisitorCounter::visit(IntegerPartitionsGenerator::Partition& partition, std::ostream* partitionOut)
 {
-    count[batch]++;
+    count++;
     if(partitionOut)
         *partitionOut << partition << "\n";
 }
@@ -35,7 +35,7 @@ void IntegerPartitionVisitorCounter::results(std::ostream* resultsOut)
     if (resultsOut)
     {
         *resultsOut
-        << "Count:\t" << std::accumulate(count, count + 256, 0ULL) << "\n"
+        << "Count:\t" << count << "\n"
         << "Time:\t" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime).count() << "us\n"
         << "##########################\n";
         resultsOut->flush();
