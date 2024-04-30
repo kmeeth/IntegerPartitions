@@ -1,3 +1,0 @@
-D:/Data/dev/PartitionsGeneration/bin/release/CMakeFiles/PartitionsGeneration.dir
-D:/Data/dev/PartitionsGeneration/bin/release/CMakeFiles/edit_cache.dir
-D:/Data/dev/PartitionsGeneration/bin/release/CMakeFiles/rebuild_cache.dir
