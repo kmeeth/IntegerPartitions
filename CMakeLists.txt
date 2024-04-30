@@ -39,7 +39,7 @@ add_executable(PartitionsGeneration src/main.cpp
         h/visitors/SetPartitionVisitorBenchmark.h
 )
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThrdeaded")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} " /MT")
 
 MESSAGE( WARNING "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS_RELEASE} )
