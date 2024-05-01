@@ -40,7 +40,7 @@ void IntegerPartitionVisitorJobDistributionOptimization::visit(IntegerPartitions
         totalCost += calculateCost(j, averageJobs);
 
     // Basically equal.
-    if(std::abs(lowestCost - totalCost) < 0.01)
+    if(std::abs(lowestCost - totalCost) < 0.0001)
         bestPartitions.push_back(partition);
     else if(lowestCost > totalCost)
     {
@@ -48,12 +48,47 @@ void IntegerPartitionVisitorJobDistributionOptimization::visit(IntegerPartitions
         bestPartitions.push_back(partition);
         lowestCost = totalCost;
     }
+
+    if(partitionOut)
+        *partitionOut << partition << "\n";
 }
 
 void
 IntegerPartitionVisitorJobDistributionOptimization::visit(IntegerPartitionsGenerator::Partition& partition, int offset,
     std::ostream* partitionOut)
 {
+    const int originalOffset = offset;
+    // First time, calculate n and k.
+    if(jobCount == -1)
+    {
+        jobCount = std::accumulate(partition.begin(), partition.end(), offset);
+        workerCount = static_cast<int>(partition.size());
+        resultsOffset = originalOffset;
+    }
+
+    double totalCost = 0;
+    const double averageJobs = static_cast<double>(jobCount) / workerCount;
+
+    for(int j : partition)
+        totalCost += calculateCost(j + (offset-- > 0 ? 1 : 0), averageJobs);
+    while(offset-- > 0)
+        totalCost += calculateCost(1, averageJobs);
+
+    // Basically equal.
+    if(std::abs(lowestCost - totalCost) < 0.0001)
+        bestPartitions.push_back(partition);
+    else if(lowestCost > totalCost)
+    {
+        bestPartitions.clear();
+        bestPartitions.push_back(partition);
+        lowestCost = totalCost;
+    }
+
+    if(partitionOut)
+    {
+        printOffset(*partitionOut, partition, originalOffset);
+        *partitionOut << "\n";
+    }
 
 }
 
@@ -77,7 +112,7 @@ void IntegerPartitionVisitorJobDistributionOptimization::results(std::ostream* r
                 printConjugate(*resultsOut, partition, countNonZeroParts(partition));
             }
             else
-                *resultsOut << partition;
+                printOffset(*resultsOut, partition, resultsOffset);
             *resultsOut << "\n";
         }
     }

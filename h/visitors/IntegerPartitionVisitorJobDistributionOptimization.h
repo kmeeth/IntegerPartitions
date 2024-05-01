@@ -13,6 +13,7 @@ public:
     void results(std::ostream* resultsOut) override;
 private:
     bool useConjugates = false;
+    int resultsOffset = 0;
     int jobCount = -1, workerCount = -1;
     IntegerPartitionsGenerator::PartitionList bestPartitions;
     double lowestCost = std::numeric_limits<double>::max();
