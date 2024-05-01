@@ -25,7 +25,7 @@ void IntegerPartitionVisitorJobDistributionOptimization::results(std::ostream* r
 {
     if(resultsOut)
     {
-        *resultsOut << "Lowest cost:\n\t" << lowestCost << "Best partitions:\n";
+        *resultsOut << "Lowest cost:\n\t" << lowestCost << "\nBest partitions:\n";
         for(auto& partition : bestPartitions)
         {
             *resultsOut << "\t";
