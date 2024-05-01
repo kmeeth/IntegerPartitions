@@ -39,6 +39,8 @@ add_executable(PartitionsGeneration src/main.cpp
         h/visitors/SetPartitionVisitorBenchmark.h
         src/visitors/IntegerPartitionVisitorJobDistributionOptimization.cpp
         h/visitors/IntegerPartitionVisitorJobDistributionOptimization.h
+        src/visitors/SetPartitionVisitorJobDistributionOptimization.cpp
+        h/visitors/SetPartitionVisitorJobDistributionOptimization.h
 )
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
