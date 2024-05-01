@@ -97,6 +97,42 @@ IntegerPartitionVisitorJobDistributionOptimization::visitConjugate(IntegerPartit
     int length, std::ostream* partitionOut)
 {
     useConjugates = true;
+    if (jobCount == -1)
+    {
+        jobCount = std::accumulate(partition.begin(), partition.begin() + length, 0);
+        workerCount = partition[0];
+    }
+
+    double totalCost = 0;
+    const double averageJobs = static_cast<double>(jobCount) / workerCount;
+
+    int originalIndex = 0;
+    for (int visitIndex = partition[0] - 1; visitIndex >= 0; visitIndex--)
+    {
+        while (originalIndex < length and partition[originalIndex] > visitIndex)
+            originalIndex++;
+        totalCost += calculateCost(originalIndex, averageJobs);
+    }
+
+    // Basically equal.
+    if (std::abs(lowestCost - totalCost) < 0.0001)
+    {
+        IntegerPartitionsGenerator::Partition newPart(partition.begin(), partition.begin() + length);
+        bestPartitions.push_back(newPart);
+    }
+    else if(lowestCost > totalCost)
+    {
+        bestPartitions.clear();
+        IntegerPartitionsGenerator::Partition newPart(partition.begin(), partition.begin() + length);
+        bestPartitions.push_back(newPart);
+        lowestCost = totalCost;
+    }
+
+    if(partitionOut)
+    {
+        printConjugate(*partitionOut, partition, length);
+        *partitionOut << "\n";
+    }
 }
 
 void IntegerPartitionVisitorJobDistributionOptimization::results(std::ostream* resultsOut)
@@ -109,7 +145,7 @@ void IntegerPartitionVisitorJobDistributionOptimization::results(std::ostream* r
             *resultsOut << "\t";
             if(useConjugates)
             {
-                printConjugate(*resultsOut, partition, countNonZeroParts(partition));
+                printConjugate(*resultsOut, partition, static_cast<int>(partition.size()));
             }
             else
                 printOffset(*resultsOut, partition, resultsOffset);
