@@ -18,7 +18,6 @@ void IntegerPartitionVisitor::printOffset(std::ostream& out, const IntegerPartit
 void IntegerPartitionVisitor::printConjugate(std::ostream& out, const IntegerPartitionsGenerator::Partition& partition, const int length)
 {
     int originalIndex = 0;
-    int counter = 0;
     for(int printIndex = partition[0] - 1; printIndex >= 0; printIndex--)
     {
         while (originalIndex < length and partition[originalIndex] > printIndex)
