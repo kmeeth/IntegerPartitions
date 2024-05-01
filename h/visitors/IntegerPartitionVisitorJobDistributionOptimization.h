@@ -15,7 +15,7 @@ private:
     bool useConjugates = false;
     int jobCount = -1, workerCount = -1;
     IntegerPartitionsGenerator::PartitionList bestPartitions;
-    double lowestCost = 0;
+    double lowestCost = std::numeric_limits<double>::max();
 };
 
 
