@@ -1,4 +1,4 @@
-#include "IntegerPartitionVisitorJobDistributionOptimization.h"
+#include "h/visitors/IntegerPartitionVisitorJobDistributionOptimization.h"
 
 
 void IntegerPartitionVisitorJobDistributionOptimization::visit(IntegerPartitionsGenerator::Partition& partition,

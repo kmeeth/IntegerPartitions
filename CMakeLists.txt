@@ -37,7 +37,7 @@ add_executable(PartitionsGeneration src/main.cpp
         src/visitors/IntegerPartitionVisitorBenchmark.cpp
         src/visitors/SetPartitionVisitorBenchmark.cpp
         h/visitors/SetPartitionVisitorBenchmark.h
-        h/visitors/IntegerPartitionVisitorJobDistributionOptimization.cpp
+        src/visitors/IntegerPartitionVisitorJobDistributionOptimization.cpp
         h/visitors/IntegerPartitionVisitorJobDistributionOptimization.h
 )
 
