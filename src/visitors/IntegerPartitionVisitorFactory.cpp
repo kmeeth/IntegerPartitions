@@ -3,7 +3,7 @@
 #include "h/visitors/IntegerPartitionVisitorBenchmark.h"
 #include "h/visitors/IntegerPartitionVisitorJobDistributionOptimization.h"
 
-const std::vector<std::string> IntegerPartitionVisitorFactory::visitors = {"Counter", "Benchmark"};
+const std::vector<std::string> IntegerPartitionVisitorFactory::visitors = {"Counter", "Benchmark", "JobDistribution"};
 
 std::unique_ptr<IntegerPartitionVisitor> IntegerPartitionVisitorFactory::make(const std::string_view name)
 {
