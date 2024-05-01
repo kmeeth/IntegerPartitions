@@ -10,7 +10,6 @@ public:
     void visit(SetPartitionsGenerator::RGS& rgs, std::ostream* partitionOut) override;
     void results(std::ostream* resultsOut) override;
 private:
-    bool useRGS = false;
     int jobCount = -1, workerCount = -1;
     double smallestCost = std::numeric_limits<double>::max();
     using RGSList = std::vector<SetPartitionsGenerator::RGS>;
