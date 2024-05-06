@@ -6,6 +6,7 @@
 // This visitor is used to find the best possible way to distribute jobCount distinct jobs among workerCount identical
 // workers. The cost function punishes overworking, inequality and overextension, while rewarding locality and taking
 // into account the difficulty of the jobs.
+// Solve : n = 14, k = 6
 class SetPartitionVisitorJobDistributionOptimization : public SetPartitionVisitor
 {
 public:

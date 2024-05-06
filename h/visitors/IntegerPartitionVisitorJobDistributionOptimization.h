@@ -4,6 +4,7 @@
 
 // This visitor is used to find the best possible way to distribute jobCount identical jobs among workerCount identical
 // workers. The cost function punishes inequality and overworking.
+// Solve: n = 100, k = 14
 class IntegerPartitionVisitorJobDistributionOptimization : public IntegerPartitionVisitor
 {
 public:
