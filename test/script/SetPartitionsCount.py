@@ -16,19 +16,28 @@ def partition(n, k):
 
 
 def main():
-    N = [14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 50]
-    K = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1, -2, -3, 0.5]
+    N = [14, 16, 18, 20, 22, 24, 26, 28, 30, 35, 40, 50, 60]
+    K = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, -1, -2, -3]
 
+    with open("../results/partitionCount.set", mode="a+") as file:
+        file.write(f" ,")
     for k in K:
-        for n in N:
-            with open("../output/partitionCount.set", mode="a") as file:
-                k_actual = k
-                if k_actual < 0:
-                    k_actual += n
-                elif k_actual == 0.5:
-                    k_actual = n // 2
-                file.write(f"{partition(n, k_actual)} ")
-        with open("../output/partitionCount.set", mode="a") as file:
+        with open("../results/partitionCount.set", mode="a+") as file:
+            file.write(f"{k},")
+    with open("../results/partitionCount.set", mode="a+") as file:
+        file.write("\n")
+    for n in N:
+        with open("../results/partitionCount.set", mode="a+") as file:
+            file.write(f"{n},")
+        for k in K:
+            k_actual = k
+            if k_actual < 0:
+                k_actual += n
+            elif k_actual == 0.5:
+                k_actual = n // 2
+            with open("../results/partitionCount.set", mode="a+") as file:
+                file.write(f"{partition(n, k_actual)},")
+        with open("../results/partitionCount.set", mode="a+") as file:
             file.write("\n")
 
 
